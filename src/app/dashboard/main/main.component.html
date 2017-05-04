@@ -10,7 +10,7 @@
                     </div>
 
                     <div fxHide.lt-md class="content" *ngIf="!loadingItems" style="margin-left: 16px;" fxLayoutGap="16px" fxLayout="column" fxFlex="50%">
-                        <app-item-card *ngFor="let item of rightItems" item="item"></app-item-card>
+                        <app-item-card *ngFor="let item of rightItems" [item]="item"></app-item-card>
                     </div>
                 </div>
 

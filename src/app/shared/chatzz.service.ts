@@ -76,18 +76,18 @@ class ChatzzService {
         this.socket.emit('add-chat-user', { userToAdd });
     }
 
-    sendMessage(toUser: string, message: string) {
+    sendMessage(userId: string, message: string) {
         if (!this.socket.connected) {
             return console.log('socket not connected');
         }
-        if (!toUser) {
+        if (!userId) {
             return console.error('null recipientUserId passed');
         }
         if (!message) {
             return console.error('null message passed');
         }
 
-        this.socket.emit('send-message', { toUser, message });
+        this.socket.emit('send-message', { userId, message });
     }
 
     getChatMessages(userId: string, fromDate: Date) {

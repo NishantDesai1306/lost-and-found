@@ -51,11 +51,10 @@ export class MainComponent implements OnInit, OnDestroy {
         this.watchers.push(watcher);
     }
 
-    ngOnInit() {
-        let watcher;
+    loadItems() {
         this.loadingItems = true;
 
-        watcher = this.itemService.getItems().subscribe((res) => {
+        this.itemService.getItems().subscribe((res) => {
             if (res.status) {
                 const items = res.data;
                 this.copy.rightItems = this.rightItems = items.splice(0, items.length / 2);
@@ -65,7 +64,12 @@ export class MainComponent implements OnInit, OnDestroy {
                 console.error(res.reason);
             }
         });
-        this.watchers.push(watcher);
+    }
+
+    ngOnInit() {
+        let watcher;
+
+        this.loadItems();
 
         watcher = this.userService.getUser().subscribe((user) => {
             this.user = user;
@@ -107,6 +111,10 @@ export class MainComponent implements OnInit, OnDestroy {
     createItem() {
         this.dialog.open(CreateItemComponent, {
             width: '600px',
+        });
+
+        this.dialog.afterAllClosed.subscribe((data) => {
+            this.loadItems();
         });
     }
 }

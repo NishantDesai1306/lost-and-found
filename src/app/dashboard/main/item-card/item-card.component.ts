@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { EditItemComponent } from './../edit-item/edit-item.component';
 import { ViewItemComponent } from './../view-items/view-item.component';
 import { Response } from '@angular/http';
-import { Component, OnInit, EventEmitter, NgZone, Inject, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, EventEmitter, NgZone, Inject, Input, Output, OnDestroy } from '@angular/core';
 import { UserService } from '../../../shared/user.service';
 import { MdDialog } from '@angular/material';
 import { ConfirmService } from '../../../shared/confirm.service';
@@ -21,6 +21,7 @@ export class ItemCardComponent implements OnInit, OnDestroy {
     user: any;
     imageLoaded = false;
     @Input() item: any;
+    @Output() refreshItems = new EventEmitter();
 
     constructor(
         private userService: UserService,
@@ -50,7 +51,7 @@ export class ItemCardComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.watchers.forEach((watcher) => {
             watcher.unsubscribe();
-        })
+        });
     }
 
     imageLoadedSuccessfully() {
@@ -67,6 +68,10 @@ export class ItemCardComponent implements OnInit, OnDestroy {
             data: this.item
         });
 
+        this.dialog.afterAllClosed.subscribe(() => {
+            this.refreshItems.emit();
+        });
+
         editItemDialogRef.componentInstance.item = this.item;
     }
 
@@ -77,6 +82,7 @@ export class ItemCardComponent implements OnInit, OnDestroy {
                 this.itemService.deleteItem(this.item)
                 .subscribe((response) => {
                     console.log(response);
+                    this.refreshItems.emit();
                 });
             }
         });

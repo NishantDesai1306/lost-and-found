@@ -1,0 +1,30 @@
+<div fxLayout="column" fxFlex>
+
+    <md-toolbar style="height: 64px;" color="primary" class="pb4">
+        <a href="#" routerLink="/dashboard" style="color: white; text-decoration: none;">
+            <span>Angular Material</span>
+        </a>
+        <span fxFlex></span>
+
+
+        <button mdTooltip="Chat" *ngIf="username" md-icon-button routerLink="/dashboard/chat">
+            <md-icon>chat</md-icon>
+            <md-basic-chip *ngIf="notificationCount">{{notificationCount}}</md-basic-chip>
+        </button>
+        <button *ngIf="username" md-button [mdMenuTriggerFor]="menu">
+             <md-icon>account_circle</md-icon> &nbsp; {{username}}
+        </button>
+        <md-menu #menu="mdMenu">
+            <button md-menu-item routerLink="/dashboard/user">
+                <md-icon>person</md-icon>
+                <span>User Details</span>
+            </button>
+            <button md-menu-item (click)="logout()">
+                <md-icon>exit_to_app</md-icon>
+                <span>Logout</span>
+            </button>
+        </md-menu>
+    </md-toolbar>
+
+    <router-outlet class="mb4"></router-outlet>
+</div>

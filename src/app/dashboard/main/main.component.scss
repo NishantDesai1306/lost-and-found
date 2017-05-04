@@ -1,0 +1,14 @@
+$tablet-screen: 768px;
+button.fab {
+    position: fixed;
+    bottom: 50px;
+    right: 70px;
+    @media screen and (max-width: $tablet-screen) {
+        right: 50px;
+    }
+}
+
+.item-image {
+    width: 100%;
+    margin-bottom: 16px;
+}

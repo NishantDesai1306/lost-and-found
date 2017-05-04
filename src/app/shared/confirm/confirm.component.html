@@ -1,0 +1,17 @@
+<div class="overflow-hidden">
+    <h2 md-dialog-title>
+        {{title}}
+    </h2>
+
+    <md-dialog-content>
+        {{description}}
+    </md-dialog-content>
+
+    <!--TODO: align buttons to the bottom with-->
+    <md-dialog-actions style="margin: 0px;">
+        <div fxLayout="row" fxFlex fxLayoutAlign="end center">
+            <button md-dialog-close md-button class="ml1" (click)="dialogRef.close()">{{cancelButtonText || 'Cancel'}}</button>
+            <button md-button color="primary" (click)="dialogRef.close(true)">{{confirmButtonText || 'Confirm'}}</button>
+        </div>
+    </md-dialog-actions>
+</div>

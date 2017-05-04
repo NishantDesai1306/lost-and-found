@@ -1,0 +1,27 @@
+<md-card>
+    <md-card-header>
+        <md-card-title>{{item.title}}</md-card-title>
+        <md-card-subtitle>{{'By '+item.owner.username}}</md-card-subtitle>
+        <div md-card-avatar [ngStyle]="getUserAvatarStyle()"></div>
+    </md-card-header>
+    <div fxLayout="row" *ngIf="!imageLoaded">
+        <md-spinner fxFlex></md-spinner>
+    </div>
+    <img md-card-image (load)="imageLoadedSuccessfully()" [hidden]="!imageLoaded" [src]="replaceSlashes(item.images[0].path)">
+    <md-card-content>
+        <h4>
+            Description
+        </h4>
+        <h5>{{item.description}}</h5>
+    </md-card-content>
+    <md-card-actions>
+        <div *ngIf="user._id === item.owner._id">
+            <button md-button (click)="editItem()">EDIT</button>
+            <button md-button (click)="deleteItem()">DELETE</button>
+        </div>
+        <div *ngIf="user._id !== item.owner._id">
+            <button md-button (click)="contactUser(item.owner._id)">CONTACT</button>
+            <button md-button (click)="viewItem()">VIEW</button>
+        </div>
+    </md-card-actions>
+</md-card>

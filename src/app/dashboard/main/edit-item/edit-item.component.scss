@@ -1,0 +1,27 @@
+.image-overlay {
+    display: none;
+    width: 105px;
+    height: 105px;
+    margin: 10px;
+}
+
+.image-overlay-wrapper {
+    width: 125px;
+    cursor: pointer;
+}
+
+.overlay-button span {
+    background: white;
+    color: black;
+    font-weight: bold;
+}
+
+.image-overlay-wrapper:hover .image-overlay {
+    position: absolute;
+    background: black;
+    opacity: 0.7;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,61 @@
+<div fxFlex="100%" class="mt4 pt2" fxLayout="column" fxLayoutAlign="center stretch">
+    <div class="content mt4 pt2" fxLayout="row" fxLayoutGap="16px">
+        <div fxFlex.lt-sm="100%" fxFlex="70%" fxFlexOffset.gt-xs="15%">
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="50%" fxFlexOffset.gt-sm="25%">
+                    <md-card class="indigo-background-color">
+                        <md-card-header>
+                            <div fxFlex fxLayoutAlign="center center">
+                                <md-icon class="white-text-color">account_circle</md-icon>
+                                &nbsp;&nbsp;
+                                <h2 class="white-text-color">
+                                    User Details
+                                </h2>
+                            </div>
+                        </md-card-header>
+                        <md-card-content>
+                            <div fxLayout="column">
+                                <div fxFlex="100%" fxLayout="row" fxLayoutAlign="center none">
+                                    <div class="avatar-100-image-overlay-wrapper">
+                                        <div class="avatar-100" class="avatar-100 avatar-100-image-overlay white-text-color">
+                                            <input type="file" id="profile-picture" ngFileSelect [options]="uploaderOptions" [events]="inputUploadEvent" (onUpload)="handleUpload($event)" (beforeUpload)="beforeUpload($event)" (onPreviewData)="handlePreviewData($event)">
+                                            <span>
+                                                <b>Change</b>&nbsp;
+                                            </span>
+                                            <md-icon>mode_edit</md-icon>
+                                        </div>
+                                        <img [src]="user.profilePictureUrl" alt="profile picture" class="avatar-100">
+                                    </div>
+                                </div>
+
+                                <div fxFlex="100%" class="mt1 mb2" *ngIf="!!uploadProgress">
+                                    <md-progress-bar class="white-progress-bar" [color]="primary" [mode]="determinate" [value]="uploadProgress">
+                                    </md-progress-bar>
+                                </div>
+
+                                <md-input-container fxFlex class="white-input mt1" hintLabel="{{usernameError}}">
+                                    <input mdInput placeholder="Username" [(ngModel)]="user.username">
+                                </md-input-container>
+
+                                <md-input-container fxFlex class="white-input mt1" hintLabel="{{emailError}}">
+                                    <input mdInput type="email" placeholder="Email" [(ngModel)]="user.email">
+                                </md-input-container>
+
+                                <div class="mt3">
+                                    <div fxFlex>
+                                        <button md-raised-button fxFlex (click)="saveChanges()">Save Changes</button>
+                                    </div>
+                                </div>
+                                <div class="mt1">
+                                    <div fxFlex>
+                                        <button routerLink="/dashboard/change-password" md-raised-button fxFlex>Change Password</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

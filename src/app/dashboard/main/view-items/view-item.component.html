@@ -1,0 +1,30 @@
+<div class="overflow-hidden">
+    <h2 md-dialog-title>
+        {{item.title}}
+    </h2>
+
+    <md-dialog-content>
+        <div fxLayout="column">
+            <div style="height: 550px;">
+                <carousel>
+                    <slide *ngFor="let image of item.images">
+                        <img [src]="image.path" style="height: 100%; width: 100%; object-fit: cover;" />
+                    </slide>
+                </carousel>
+            </div>
+
+            <h4>Description</h4>
+            <div fxFlex>
+                {{item.description}}
+            </div>
+        </div>
+    </md-dialog-content>
+
+    <!--TODO: align buttons to the bottom with-->
+    <md-dialog-actions style="margin: 0px;">
+        <div fxLayout="row" fxFlex fxLayoutAlign="end center">
+            <button md-dialog-close md-button class="ml1">Close</button>
+            <button md-button color="primary">Contact</button>
+        </div>
+    </md-dialog-actions>
+</div>

@@ -1,0 +1,23 @@
+<div fxFlex="100%" class="mt2 pt2" fxLayout="column" fxLayoutAlign="center stretch">
+    <div class="content" fxLayout="row" fxLayoutGap="16px">
+        <div fxFlex.lt-sm="100%" fxFlex="70%" fxFlexOffset.gt-xs="15%">
+            <div class="my3" fxLayout="row">
+                <div fxFlex="100%" fxLayout="row">
+                    <md-spinner *ngIf="loadingItems" fxFlex></md-spinner>
+
+                    <div class="content" *ngIf="!loadingItems" fxLayoutGap="16px" fxLayout="column" fxFlex.lt-md="100%" fxFlex.gt-md="50%">
+                        <app-item-card *ngFor="let item of leftItems" [item]="item"></app-item-card>
+                    </div>
+
+                    <div fxHide.lt-md class="content" *ngIf="!loadingItems" style="margin-left: 16px;" fxLayoutGap="16px" fxLayout="column" fxFlex="50%">
+                        <app-item-card *ngFor="let item of rightItems" item="item"></app-item-card>
+                    </div>
+                </div>
+
+                <button (click)="createItem()" md-fab class="fab indigo-background-color">
+                    <md-icon class="white-text-color">add</md-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

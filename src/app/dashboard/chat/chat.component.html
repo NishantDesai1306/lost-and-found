@@ -1,0 +1,63 @@
+<div fxFlex="100%" style="margin-top: 25px;" fxLayout="column" [style.height.px]="screenHeight">
+    <md-sidenav-container class="chat-container" [style.height]="screenHeight">
+        <md-sidenav mode="side" #sidenav class="chat-sidenav" [style.height.px]="screenHeight">
+            <md-list>
+                <div *ngFor="let companionUser of connectedUsers" class="chat-users-list-item cursor-pointer p2" (click)="selectCompanionUser(companionUser)">
+                    <div class="chat-user-item">
+                        <md-list-item>
+                            <img md-list-avatar src="{{replaceSlashes(companionUser.profilePicture.path)}}" alt="{{companionUser.username}}">
+                            <h3 md-line> {{companionUser.username}} </h3>
+                            <p *ngIf="companionUser.status === 'online'" class="status-online" md-line> {{companionUser.status}} </p>
+                            <p *ngIf="companionUser.status !== 'online'" md-line>{{companionUser.lastOnline | date: 'dd-MMM hh:mm a'}}</p>
+                        </md-list-item>
+                    </div>
+                </div>
+            </md-list>
+        </md-sidenav>
+
+        <div class="chat-container" [style.height.px]="screenHeight">
+            <div fxFlex fxLayout="column">
+                <div fxFlex="90%" style="overflow-x: auto;" fxLayout='column'>
+                    <div *ngIf="chatData.messages && chatData.messages.length" class="margin-bottom-70 display-block">
+                        <div *ngFor="let messageObj of chatData.messages" fxLayoutAlign="{{getMessageAlignment(messageObj)}}" fxFlex class="message-item">
+                            <div class="message-container">
+                                <div [ngClass]="{'my-pic': messageObj.from.user._id === userId}">
+                                    <img *ngIf="messageObj.showImage" src="{{replaceSlashes(messageObj.from.user.profilePicture.path)}}" class="user-image">
+                                </div>
+
+                                <div class="bubble" [ngClass]="{'left-chat-bubble': messageObj.to.user._id === userId, 'right-chat-bubble': messageObj.from.user._id === userId}">
+                                    <span>{{messageObj.message}}</span>
+                                    <div class="message-details">
+                                        <span class="message-time">{{messageObj.createdAt | date: 'hh:mm a'}}</span>
+                                        <md-icon class="message-status" [ngClass]="{'green-color': isMessageRead(messageObj)}">{{getMessageStatusIcon(messageObj)}}</md-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div fxFlex="10%">
+                    <md-card *ngIf="!!chatData.companionUser._id" class="grey-background-color create-message-card height-70">
+                        <div fxFlex="100%" fxLayout="row">
+                            <div fxFlex="95%">
+                                <md-input-container fxFlex>
+                                    <input mdInput placeholder="New Message" [(ngModel)]="chatData.newMessage">
+                                </md-input-container>
+                            </div>
+                            <div fxFlex="5%" fxLayout="row" fxLayoutAlign="center center">
+                                <button mdTooltip="Send" [disabled]="!chatData.newMessage" (click)="sendMessage(chatData.newMessage)" md-icon-button color="primary">
+                                    <md-icon>send</md-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </md-card>
+                </div>
+                <button (click)="sidenav.toggle()" md-fab class="fab indigo-background-color" fxShow.lg="false">
+                    <md-icon class="white-text-color">format_list_bulleted</md-icon>
+                </button>
+            </div>
+        </div>
+
+    </md-sidenav-container>
+</div>

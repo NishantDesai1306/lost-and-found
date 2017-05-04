@@ -1,0 +1,32 @@
+@import '~@angular/material/_theming';
+#file-upload {
+    position: absolute;
+    opacity: 0;
+    // height: 100%;
+    // width: 100%;
+}
+
+.selected-pictures {
+    height: 100px;
+    width: 100px;
+    border-radius: 5px;
+    margin: 10px;
+    border: 1px solid mat-color($mat-indigo, 500);
+}
+
+div.cdk-overlay-pane {
+    display: flex;
+    justify-content: center;
+}
+
+.upload-image-button {
+    background: mat-color($mat-indigo, 500);
+    padding: 10px;
+    color: white;
+    border-radius: 3px;
+    text-align: center;
+    cursor: pointer;
+    input {
+        width: 1px;
+    }
+}

@@ -1,0 +1,121 @@
+@import '~@angular/material/_theming';
+.chat-container {
+    width: 100%;
+}
+
+.message-item {
+    margin: 5px 0px;
+}
+
+.chat-sidenav-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat-sidenav {
+    width: 250px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.create-message-card {
+    position: fixed !important;
+    width: 100% !important;
+    bottom: 0 !important;
+    padding: 10px !important;
+}
+
+.height-70 {
+    height: 70px !important;
+}
+
+.margin-bottom-70 {
+    margin: 0px 30px 70px 30px !important;
+}
+
+.display-block {
+    display: block !important;
+}
+
+.message-container {
+    word-break: break-word
+}
+
+.message-container img.user-image {
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
+    margin-bottom: 5px;
+}
+
+.bubble {
+    position: relative;
+    padding: 10px;
+    background: mat-color($mat-indigo, 500);
+    color: white;
+}
+
+.left-chat-bubble:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 20px solid mat-color($mat-indigo, 500);
+    border-left: 20px solid transparent;
+    position: absolute;
+    top: 0px;
+    left: -20px;
+}
+
+.right-chat-bubble {
+    width: 75%;
+    float: right;
+}
+
+.right-chat-bubble:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 20px solid mat-color($mat-indigo, 500);
+    border-right: 20px solid transparent;
+    position: absolute;
+    top: 0px;
+    right: -20px;
+}
+
+.message-details {
+    display: flex;
+    justify-content: flex-end;
+    .message-time {
+        font-size: 10px;
+        margin-right: 10px;
+    }
+    .message-status {
+        font-size: 15px;
+    }
+}
+
+.my-pic {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.my-message {
+    width: 75%;
+    float: right;
+}
+
+.green-color {
+    color: mat-color($mat-green, 400);
+}
+
+.chat-users-list-item {
+    padding: 15px 15px 0px 15px;
+}
+
+.chat-user-item {
+    padding-bottom: 15px;
+    border-bottom: 1px solid mat-color($mat-grey, 300);
+}

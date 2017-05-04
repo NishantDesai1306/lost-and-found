@@ -1,0 +1,65 @@
+@import '~@angular/material/_theming';
+@import './app/dashboard/main/main.component.scss';
+@import './app/dashboard/main/create-item/create-item.component.scss';
+@import './app/dashboard/main/edit-item/edit-item.component.scss';
+@import './app/dashboard/user/user.component.scss';
+@import './app/dashboard/chat/chat.component.scss';
+html,
+body {
+    background: mat-color($mat-grey, 200);
+    display: flex;
+    flex-direction: column;
+    font-family: Roboto, Arial, sans-serif;
+    margin: 0;
+    height: 100%;
+}
+
+.mat-primary.mat-toolbar {
+    position: fixed;
+    z-index: 2;
+}
+
+.indigo-background-color {
+    background: mat-color($mat-indigo, 500) !important;
+}
+
+.white-background-color {
+    background: white;
+}
+
+.white-text-color {
+    color: white;
+}
+
+.white-input {
+    color: white;
+    .mat-input-placeholder {
+        color: white !important;
+    }
+    .mat-input-underline {
+        background: mat-color($mat-grey, 300);
+        .mat-input-ripple {
+            background: white;
+        }
+    }
+}
+
+.grey-background-color {
+    background: mat-color($mat-grey, 300) !important;
+}
+
+.white-progress-bar .mat-progress-bar-fill::after {
+    background: white;
+}
+
+.mat-basic-chip {
+    background: white;
+    color: mat-color($mat-indigo, 500);
+    border-radius: 20px;
+    padding: 5px;
+    font-weight: bold;
+    font-size: 11px;
+    position: relative;
+    left: -20px;
+    top: -12px;
+}

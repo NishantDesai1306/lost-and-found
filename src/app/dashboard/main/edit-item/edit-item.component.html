@@ -1,0 +1,60 @@
+<div class="overflow-hidden">
+    <h2 md-dialog-title>
+        Edit Item
+    </h2>
+
+    <md-dialog-content>
+        <div fxLayout="column">
+            <md-input-container fxFlex class="mt1" hintLabel="{{titleError}}">
+                <input mdInput placeholder="Title" [(ngModel)]="item.title">
+            </md-input-container>
+
+            <md-input-container fxFlex class="mt1" hintLabel="{{descriptionError}}">
+                <textarea mdInput placeholder="Description" [(ngModel)]="item.description"></textarea>
+            </md-input-container>
+
+            <div fxFlex="100%" class="mt1 mb2" *ngIf="!!uploadProgress">
+                <md-progress-bar class="white-progress-bar" [color]="primary" [mode]="determinate" [value]="uploadProgress">
+                </md-progress-bar>
+            </div>
+
+            <h4>Images</h4>
+            <div style="display: flex;">
+                <div class="image-overlay-wrapper" *ngFor="let imgData of item.images; let i = index;">
+                    <div style="position: relative;">
+                        <div class="image-overlay white-text-color" (click)="deleteImage(i)">
+                            <span>
+                                <b>Delete</b>&nbsp;
+                            </span>
+                            <md-icon>delete</md-icon>
+                        </div>
+                    </div>
+                    <img class="selected-pictures" [src]="replaceSlashes(imgData.path)">
+                </div>
+            </div>
+
+            <div *ngIf="previewData && previewData.length">
+                <h4>Upload Images</h4>
+                <div>
+                    <img class="selected-pictures" *ngFor="let imgData of previewData" [src]="imgData">
+                </div>
+            </div>
+
+            <label class="mt2 mb2 upload-image-button">
+                <input multiple type="file" id="file-upload" ngFileSelect [options]="uploaderOptions" [events]="inputUploadEvent" (onUpload)="handleUpload($event)" (onPreviewData)="handlePreviewData($event)"> Images
+            </label>
+            <div fxFlex="100%" class="mt1 mb2" *ngIf="!!uploadProgress">
+                <md-progress-bar [color]="primary" [mode]="determinate" [value]="uploadProgress">
+                </md-progress-bar>
+            </div>
+        </div>
+    </md-dialog-content>
+
+    <!--TODO: align buttons to the bottom with-->
+    <md-dialog-actions style="margin: 0px;">
+        <div fxLayout="row" fxFlex fxLayoutAlign="end center">
+            <button md-dialog-close md-button class="ml1">Close</button>
+            <button md-button color="primary" (click)="editItem()">Edit</button>
+        </div>
+    </md-dialog-actions>
+</div>

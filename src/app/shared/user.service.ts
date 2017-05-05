@@ -17,7 +17,9 @@ class User {
         this.username = username;
         this.email = email;
         this.profilePictureUrl = profilePicture;
-        this.chatData = {};
+        this.chatData = {
+            connectedUsers: []
+        };
     }
 
     setConnectedUsers(users) {

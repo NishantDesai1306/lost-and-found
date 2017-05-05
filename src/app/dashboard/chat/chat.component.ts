@@ -58,18 +58,29 @@ export class ChatComponent implements OnInit, OnDestroy {
                 this.userId = newUser.getId();
                 this.username = newUser.getUsername();
                 this.connectedUsers = newUser.getConnectedUsers();
+
+                watcher = this.route.queryParams.subscribe((data) => {
+                    if (data && data.user) {
+                        const requiredUser = this.connectedUsers.find((connectedUser) => {
+                            return data.user === connectedUser._id;
+                        });
+
+                        this.selectCompanionUser(requiredUser);
+                    }
+                });
             });
         this.watchers.push(watcher);
+
 
         this.notificationCountService.setCount(0);
         this.notificationCountService.setUpdateFlag(false);
 
-        if(this.isScreeSizeLg()) {
+        if (this.isScreeSizeLg()) {
             this.sideNav.open();
         }
 
         this.companionUserBehaviourSubject.subscribe((companionUserObj: any) => {
-            if(!companionUserObj) {
+            if (!companionUserObj) {
                 return;
             }
 

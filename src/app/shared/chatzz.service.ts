@@ -17,7 +17,8 @@ class ChatzzService {
         NEW_MESSAGE: 'new-message',
         USER_DETAILS: 'user-details',
         MESSAGE_STATUS_CHANGED: 'message-status-changed',
-        CHAT_USER_STATUS_CHANGED: 'chat-user-status-changed'
+        CHAT_USER_STATUS_CHANGED: 'chat-user-status-changed',
+        CHAT_USER_ADDED: 'chat-user-added'
     };
 
     messageStatus = {
@@ -64,7 +65,7 @@ class ChatzzService {
         this.socket.emit('connect-user', {userId});
     }
 
-    addChatUser(userToAdd: string) {
+    addChatUser(userToAdd: string, callback) {
         if (!this.socket.connected) {
             return console.log('socket not connected');
         }
@@ -73,7 +74,7 @@ class ChatzzService {
             return console.error('null userId passed');
         }
 
-        this.socket.emit('add-chat-user', { userToAdd });
+        this.socket.emit('add-chat-user', { userToAdd }, callback);
     }
 
     sendMessage(userId: string, message: string) {

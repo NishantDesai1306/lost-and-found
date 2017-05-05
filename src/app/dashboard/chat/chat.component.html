@@ -7,8 +7,12 @@
                         <md-list-item>
                             <img md-list-avatar src="{{replaceSlashes(companionUser.profilePicture.path)}}" alt="{{companionUser.username}}">
                             <h3 md-line> {{companionUser.username}} </h3>
-                            <p *ngIf="companionUser.status === 'online'" class="status-online" md-line> {{companionUser.status}} </p>
-                            <p *ngIf="companionUser.status !== 'online'" md-line>{{companionUser.lastOnline | date: 'dd-MMM hh:mm a'}}</p>
+                            <p *ngIf="companionUser.status === 'online'" class="status-online" md-line>
+                                {{companionUser.status}}
+                            </p>
+                            <p *ngIf="companionUser.status !== 'online'" md-line>
+                                {{companionUser.lastOnline | date: 'dd-MMM hh:mm a'}}
+                            </p>
                         </md-list-item>
                     </div>
                 </div>

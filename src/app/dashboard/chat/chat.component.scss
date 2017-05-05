@@ -115,7 +115,16 @@
     padding: 15px 15px 0px 15px;
 }
 
+.chat-users-list-item:hover {
+    background: mat-color($mat-grey, 200);
+}
+
 .chat-user-item {
     padding-bottom: 15px;
     border-bottom: 1px solid mat-color($mat-grey, 300);
+}
+
+.status-online {
+    color: mat-color($mat-green, 400);
+    font-weight: bold !important;
 }

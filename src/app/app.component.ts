@@ -43,11 +43,20 @@ export class AppComponent implements OnInit {
             .getUser()
             .subscribe((newUser) => {
                 this.username = newUser.getUsername(); 
+                this.chatzzService.newMessage()
+                .subscribe((message) => {
+                    if(message.type === this.chatzzService.messageTypes.CHAT_USER_ADDED) {
+                        const connectedUsers = newUser.getConnectedUsers();
+                        connectedUsers.push(message.data);
+                        newUser.setConnectedUsers(connectedUsers);
+                    }
+                })
             });
 
         this.notificationCountService.getSubscription()
         .subscribe((newCount) => {
             this.notificationCount = newCount;
         });
+
     }
 }

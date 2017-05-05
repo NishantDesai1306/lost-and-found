@@ -109,9 +109,21 @@ export class ItemCardComponent implements OnInit, OnDestroy {
         }
 
         if (!isUserAlreadyConnected) {
-            this.chatzzService.addChatUser(userId);
+            this.chatzzService.addChatUser(userId, (err, userObj) => {
+                if(err) {
+                    return console.error(err);
+                }
+
+                this.userService.getUser().subscribe((user) => {
+                    const users = user.getConnectedUsers();
+                    userObj.user.status = userObj.status;
+                    userObj.user.lastOnline = userObj.lastOnline;
+                    users.push(userObj.user);
+                    this.user.setConnectedUsers(users);
+                    return this.router.navigateByUrl('/dashboard/chat?user=' + userId);
+                });
+            });
         }
 
-        return this.router.navigateByUrl('/dashboard/chat?user=' + userId);
     }
 }

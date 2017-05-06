@@ -13,6 +13,9 @@
                             <p *ngIf="companionUser.status !== 'online'" md-line>
                                 {{companionUser.lastOnline | date: 'dd-MMM hh:mm a'}}
                             </p>
+                            <md-chip-list *ngIf="missedMessageMap[companionUser.chatRoom]">
+                                <md-chip class="unread-message-count">{{missedMessageMap[companionUser.chatRoom]}}</md-chip>
+                            </md-chip-list>
                         </md-list-item>
                     </div>
                 </div>

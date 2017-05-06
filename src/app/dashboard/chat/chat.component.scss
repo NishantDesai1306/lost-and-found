@@ -111,6 +111,12 @@
     color: mat-color($mat-green, 400);
 }
 
+.unread-message-count {
+    background: mat-color($mat-green, 400) !important;
+    font-weight: bold !important;
+    color: white !important;
+}
+
 .chat-users-list-item {
     padding: 15px 15px 0px 15px;
 }

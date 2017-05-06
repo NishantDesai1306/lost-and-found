@@ -18,7 +18,8 @@ class User {
         this.email = email;
         this.profilePictureUrl = profilePicture;
         this.chatData = {
-            connectedUsers: []
+            connectedUsers: [],
+            missedMessages: {}
         };
     }
 
@@ -41,6 +42,9 @@ class User {
     }
     getProfilePictureUrl(): string {
         return this.profilePictureUrl || null;
+    }
+    getChatData(): any {
+        return this.chatData;
     }
 }
 

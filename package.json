@@ -26,7 +26,7 @@
     "basscss": "^8.0.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.1",
-    "chatzz": "^1.1.4",
+    "chatzz": "file:///E:\\Projects\\chatzz",
     "cookie-parser": "^1.4.3",
     "core-js": "^2.4.1",
     "express-session": "^1.15.2",

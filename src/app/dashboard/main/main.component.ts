@@ -90,9 +90,20 @@ export class MainComponent implements OnInit, OnDestroy {
 
                     this.notificationCountService.setCount(allMissedMessagesCount);
                     this.user.setConnectedUsers(message.data.connectedUsers);
+
+                    const allConnectedUsers = (<any>Object).keys(message.data.missedMessages);
+                    allConnectedUsers.forEach((connectedUser) => {
+                        this.user.chatData.missedMessages[connectedUser] = message.data.missedMessages[connectedUser].length;
+                    });
                     break;
                 }
                 case this.chatzzService.messageTypes.NEW_MESSAGE: {
+                    if (this.user.chatData.missedMessages[message.data.chatRoom]) {
+                        this.user.chatData.missedMessages[message.data.chatRoom]++;
+                    } else {
+                        this.user.chatData.missedMessages[message.data.chatRoom] = 1;
+                    }
+
                     this.notificationCountService.addToCount(1);
                     break;
                 }

@@ -30,6 +30,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         lastUserIdWithImage: ''
     };
     connectedUsers = [];
+    missedMessageMap = {};
 
     @ViewChild(MdSidenav) sideNav: MdSidenav;
 
@@ -58,6 +59,7 @@ export class ChatComponent implements OnInit, OnDestroy {
                 this.userId = newUser.getId();
                 this.username = newUser.getUsername();
                 this.connectedUsers = newUser.getConnectedUsers();
+                this.missedMessageMap = newUser.getChatData().missedMessages;
 
                 watcher = this.route.queryParams.subscribe((data) => {
                     if (data && data.user) {
@@ -86,12 +88,16 @@ export class ChatComponent implements OnInit, OnDestroy {
 
             this.chatData.companionUser = companionUserObj;
             this.loadMessages(this.chatData.companionUser._id);
-
         });
 
         watcher = this.chatzzService.newMessage().subscribe((message) => {
             switch(message.type) {
                 case this.chatzzService.messageTypes.OLD_MESSAGES: {
+                    if(message.data && message.data.length) {
+                        const chatRoomId = message.data[0].chatRoom;
+                        this.missedMessageMap[chatRoomId] = 0;
+                    }
+
                     message.data.map((oldMessage) => {
                         if (oldMessage.to.user._id === this.userId && oldMessage.status !== this.chatzzService.messageStatus.READ) {
                             this.chatzzService.markMessageRead(oldMessage._id);
@@ -114,7 +120,16 @@ export class ChatComponent implements OnInit, OnDestroy {
                         message.data.status !== this.chatzzService.messageStatus.READ && 
                         this.chatData.companionUser._id === message.data.from.user._id) {
 
+                        this.chatData.messages.push(message.data);
                         this.chatzzService.markMessageRead(message.data._id);
+                    }
+                    else {
+                        if(this.missedMessageMap[message.data.chatRoom]) {
+                            this.missedMessageMap[message.data.chatRoom]++;
+                        }
+                        else {
+                            this.missedMessageMap[message.data.chatRoom] = 1;
+                        }
                     }
 
                     if(message.data.from.user._id !== this.chatData.lastUserIdWithImage) {
@@ -122,7 +137,9 @@ export class ChatComponent implements OnInit, OnDestroy {
                         this.chatData.lastUserIdWithImage = message.data.from.user._id;
                     }
 
-                    this.chatData.messages.push(message.data);
+                    if(message.data.from.user._id === this.userId) {
+                        this.chatData.messages.push(message.data);
+                    }
                     break;
                 }
                 case this.chatzzService.messageTypes.MESSAGE_STATUS_CHANGED:

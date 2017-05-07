@@ -7,8 +7,8 @@ import {Router, ActivatedRoute} from '@angular/router';
 export class LoginComponent implements OnInit {
     error: string;
     user = {
-        email: 'nishant',
-        password: 'nishant'
+        email: '',
+        password: ''
     };
     rememberMe = false;
 

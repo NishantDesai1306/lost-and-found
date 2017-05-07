@@ -7,7 +7,7 @@
         "build": "ng build",
         "lint": "ng lint",
         "workshop": "ts-node ./workshop-cli",
-        "start": "cross-env UPLOAD_PATH=./upload NODE_ENV='production' node server/server.js"
+        "start": "node server/server.js"
     },
     "private": true,
     "dependencies": {

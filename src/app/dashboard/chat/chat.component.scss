@@ -125,6 +125,10 @@
     background: mat-color($mat-grey, 200);
 }
 
+.selected-user {
+    background: mat-color($mat-grey, 300);
+}
+
 .chat-user-item {
     padding-bottom: 15px;
     border-bottom: 1px solid mat-color($mat-grey, 300);

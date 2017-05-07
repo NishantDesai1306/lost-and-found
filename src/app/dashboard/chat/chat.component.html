@@ -2,7 +2,7 @@
     <md-sidenav-container class="chat-container" [style.height]="screenHeight">
         <md-sidenav mode="side" #sidenav class="chat-sidenav" [style.height.px]="screenHeight">
             <md-list>
-                <div *ngFor="let companionUser of connectedUsers" class="chat-users-list-item cursor-pointer p2" (click)="selectCompanionUser(companionUser)">
+                <div *ngFor="let companionUser of connectedUsers" class="chat-users-list-item cursor-pointer p2" [ngClass]="{'selected-user': chatData.companionUser._id === companionUser._id}" (click)="selectCompanionUser(companionUser)">
                     <div class="chat-user-item">
                         <md-list-item>
                             <img md-list-avatar src="{{replaceSlashes(companionUser.profilePicture.path)}}" alt="{{companionUser.username}}">

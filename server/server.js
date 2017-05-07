@@ -18,7 +18,8 @@ var server = require('http').Server(app);
 var chatzzFunctions = require('./api/chatzz');
 
 //mongoose connect
-mongoose.connect('mongodb://localhost/mean2-starter').then(function() {
+mongoose.connect('mongodb://root:root@ds133331.mlab.com:33331/lost-box').then(function() {
+    console.log('\nconnected to db!!!\n');
     chatzz.init(server, Object.assign({}, chatzzFunctions));
 });
 
@@ -33,7 +34,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(cookieParser());
 
-console.log('Running app in ', process.env.NODE_ENV, 'mode');
+console.log('\nRunning app in ', process.env.NODE_ENV, 'mode\n');
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.resolve('./dist')));
 }

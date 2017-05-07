@@ -27,7 +27,7 @@ export class ChatzzService {
         NOT_SENT: 'not_sent'
     };
 
-    constructor(private serverUrl: string) {
+    constructor(private serverUrl: string, requireSecurity: boolean) {
         if(!serverUrl) {
             throw new Error('invalid server url provided');
         }
@@ -35,7 +35,7 @@ export class ChatzzService {
             console.log('chatzz service configured to work with server', serverUrl);
         }
 
-        this.socket = io(serverUrl);
+        this.socket = io(serverUrl, {secure: requireSecurity});
 
         this.socketMessageBehaviousSubject = new BehaviorSubject<any>({});
 
@@ -131,11 +131,11 @@ export class ChatzzService {
     }
 }
 
-export const getChatzzService = (url: string): ChatzzService => {
+export const getChatzzService = (url: string, requireSecurity: boolean): ChatzzService => {
     let chatzzServiceInstance: ChatzzService = null;
 
     if(!chatzzServiceInstance) {
-        chatzzServiceInstance = new ChatzzService(url);
+        chatzzServiceInstance = new ChatzzService(url, requireSecurity);
     }
     return chatzzServiceInstance;
 };

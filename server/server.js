@@ -33,7 +33,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(cookieParser());
 
-// app.use(express.static(path.resolve('./dist')));
+console.log('Running app in ', process.env.NODE_END, 'mode');
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.resolve('./dist')));
+}
+
 app.use('/upload', express.static('upload'));
 
 app.use(session({

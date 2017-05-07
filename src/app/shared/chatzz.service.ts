@@ -8,7 +8,7 @@ interface SocketMessage {
 }
 
 @Injectable()
-class ChatzzService {
+export class ChatzzService {
     private socket;
     socketMessageBehaviousSubject: BehaviorSubject<SocketMessage>;
 
@@ -131,7 +131,7 @@ class ChatzzService {
     }
 }
 
-const getChatzzService = (url: string): ChatzzService => {
+export const getChatzzService = (url: string): ChatzzService => {
     let chatzzServiceInstance: ChatzzService = null;
 
     if(!chatzzServiceInstance) {
@@ -139,7 +139,3 @@ const getChatzzService = (url: string): ChatzzService => {
     }
     return chatzzServiceInstance;
 };
-
-const dummyTest = (url): ChatzzService => {return getChatzzService(url)};
-
-export default dummyTest;

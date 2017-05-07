@@ -1,8 +1,8 @@
 import { FactoryProvider, OpaqueToken } from '@angular/core';
-import dummyTest from './chatzz.service';
+import getCustomChatzzService from './custom-chatzz.service';
 
 export const ChatzzService = new OpaqueToken('ChatzzSerivce');
 export const ChatzzServiceProvider: FactoryProvider = {
     provide: ChatzzService,
-    useFactory: () => dummyTest('http://localhost:4200/')
+    useFactory: getCustomChatzzService
 };

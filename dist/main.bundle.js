@@ -2135,7 +2135,7 @@ var getChatzzService = function (url, requireSecurity) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__chatzz_service__ = __webpack_require__(465);
 
-var getCustomChatzzService = function () { return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__chatzz_service__["a" /* getChatzzService */])('http://localhost:3000/', true); };
+var getCustomChatzzService = function () { return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__chatzz_service__["a" /* getChatzzService */])('https://localhost:3000/', true); };
 /* harmony default export */ __webpack_exports__["a"] = getCustomChatzzService;
 //# sourceMappingURL=custom-chatzz.service.js.map
 

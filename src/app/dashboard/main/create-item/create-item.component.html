@@ -14,11 +14,6 @@
                 <textarea mdInput placeholder="Description" [(ngModel)]="item.description"></textarea>
             </md-input-container>
 
-            <div fxFlex="100%" class="mt1 mb2" *ngIf="!!uploadProgress">
-                <md-progress-bar class="white-progress-bar" [color]="primary" [mode]="determinate" [value]="uploadProgress">
-                </md-progress-bar>
-            </div>
-
             <div>
                 <img class="selected-pictures" *ngFor="let imgData of previewData" [src]="imgData">
             </div>

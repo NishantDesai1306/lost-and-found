@@ -1075,8 +1075,8 @@ var LoginComponent = (function () {
         this.router = router;
         this.route = route;
         this.user = {
-            email: 'nishant',
-            password: 'nishant'
+            email: '',
+            password: ''
         };
         this.rememberMe = false;
         this.usernameError = '';
@@ -2641,7 +2641,7 @@ var ChatzzServiceProvider = {
 /***/ 566:
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxFlex>\r\n\r\n    <md-toolbar style=\"height: 64px;\" color=\"primary\" class=\"pb4\">\r\n        <a href=\"#\" routerLink=\"/dashboard\" style=\"color: white; text-decoration: none;\">\r\n            <span>Angular Material</span>\r\n        </a>\r\n        <span fxFlex></span>\r\n\r\n\r\n        <button mdTooltip=\"Chat\" *ngIf=\"username\" md-icon-button routerLink=\"/dashboard/chat\">\r\n            <md-icon>chat</md-icon>\r\n            <md-basic-chip *ngIf=\"notificationCount\">{{notificationCount}}</md-basic-chip>\r\n        </button>\r\n        <button *ngIf=\"username\" md-button [mdMenuTriggerFor]=\"menu\">\r\n             <md-icon>account_circle</md-icon> &nbsp; {{username}}\r\n        </button>\r\n        <md-menu #menu=\"mdMenu\">\r\n            <button md-menu-item routerLink=\"/dashboard/user\">\r\n                <md-icon>person</md-icon>\r\n                <span>User Details</span>\r\n            </button>\r\n            <button md-menu-item (click)=\"logout()\">\r\n                <md-icon>exit_to_app</md-icon>\r\n                <span>Logout</span>\r\n            </button>\r\n        </md-menu>\r\n    </md-toolbar>\r\n\r\n    <router-outlet class=\"mb4\"></router-outlet>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxFlex>\r\n\r\n    <md-toolbar style=\"height: 64px;\" color=\"primary\" class=\"pb4\">\r\n        <a href=\"#\" routerLink=\"/dashboard\" style=\"color: white; text-decoration: none;\">\r\n            <span>Lost Box</span>\r\n        </a>\r\n        <span fxFlex></span>\r\n\r\n\r\n        <button mdTooltip=\"Chat\" *ngIf=\"username\" md-icon-button routerLink=\"/dashboard/chat\">\r\n            <md-icon>chat</md-icon>\r\n            <md-basic-chip *ngIf=\"notificationCount\">{{notificationCount}}</md-basic-chip>\r\n        </button>\r\n        <button *ngIf=\"username\" md-button [mdMenuTriggerFor]=\"menu\">\r\n             <md-icon>account_circle</md-icon> &nbsp; {{username}}\r\n        </button>\r\n        <md-menu #menu=\"mdMenu\">\r\n            <button md-menu-item routerLink=\"/dashboard/user\">\r\n                <md-icon>person</md-icon>\r\n                <span>User Details</span>\r\n            </button>\r\n            <button md-menu-item (click)=\"logout()\">\r\n                <md-icon>exit_to_app</md-icon>\r\n                <span>Logout</span>\r\n            </button>\r\n        </md-menu>\r\n    </md-toolbar>\r\n\r\n    <router-outlet class=\"mb4\"></router-outlet>\r\n</div>"
 
 /***/ }),
 

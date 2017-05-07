@@ -2014,7 +2014,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var ChatzzService = (function () {
-    function ChatzzService(serverUrl) {
+    function ChatzzService(serverUrl, requireSecurity) {
         var _this = this;
         this.serverUrl = serverUrl;
         this.messageTypes = {
@@ -2036,7 +2036,7 @@ var ChatzzService = (function () {
         else {
             console.log('chatzz service configured to work with server', serverUrl);
         }
-        this.socket = __WEBPACK_IMPORTED_MODULE_2_socket_io_client__(serverUrl);
+        this.socket = __WEBPACK_IMPORTED_MODULE_2_socket_io_client__(serverUrl, { secure: requireSecurity });
         this.socketMessageBehaviousSubject = new __WEBPACK_IMPORTED_MODULE_0_rxjs_Rx__["BehaviorSubject"]({});
         this.socket.on('chatzz', function (data) {
             console.log(data.type, data.data);
@@ -2115,13 +2115,13 @@ var ChatzzService = (function () {
 }());
 ChatzzService = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["d" /* Injectable */])(),
-    __metadata("design:paramtypes", [String])
+    __metadata("design:paramtypes", [String, Boolean])
 ], ChatzzService);
 
-var getChatzzService = function (url) {
+var getChatzzService = function (url, requireSecurity) {
     var chatzzServiceInstance = null;
     if (!chatzzServiceInstance) {
-        chatzzServiceInstance = new ChatzzService(url);
+        chatzzServiceInstance = new ChatzzService(url, requireSecurity);
     }
     return chatzzServiceInstance;
 };
@@ -2135,7 +2135,7 @@ var getChatzzService = function (url) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__chatzz_service__ = __webpack_require__(465);
 
-var getCustomChatzzService = function () { return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__chatzz_service__["a" /* getChatzzService */])('http://localhost:3000/'); };
+var getCustomChatzzService = function () { return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__chatzz_service__["a" /* getChatzzService */])('http://localhost:3000/', true); };
 /* harmony default export */ __webpack_exports__["a"] = getCustomChatzzService;
 //# sourceMappingURL=custom-chatzz.service.js.map
 
@@ -2718,7 +2718,7 @@ var _a;
 /***/ 570:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"overflow-hidden\">\r\n    <h2 md-dialog-title>\r\n        Create Item\r\n\r\n    </h2>\r\n\r\n    <md-dialog-content>\r\n        <div fxLayout=\"column\">\r\n            <md-input-container fxFlex class=\"mt1\" hintLabel=\"{{titleError}}\">\r\n                <input mdInput placeholder=\"Title\" [(ngModel)]=\"item.title\">\r\n            </md-input-container>\r\n\r\n            <md-input-container fxFlex class=\"mt1\" hintLabel=\"{{descriptionError}}\">\r\n                <textarea mdInput placeholder=\"Description\" [(ngModel)]=\"item.description\"></textarea>\r\n            </md-input-container>\r\n\r\n            <div fxFlex=\"100%\" class=\"mt1 mb2\" *ngIf=\"!!uploadProgress\">\r\n                <md-progress-bar class=\"white-progress-bar\" [color]=\"primary\" [mode]=\"determinate\" [value]=\"uploadProgress\">\r\n                </md-progress-bar>\r\n            </div>\r\n\r\n            <div>\r\n                <img class=\"selected-pictures\" *ngFor=\"let imgData of previewData\" [src]=\"imgData\">\r\n            </div>\r\n            <label class=\"mt2 mb2 upload-image-button\">\r\n                <input multiple type=\"file\" id=\"file-upload\" ngFileSelect [options]=\"uploaderOptions\" [events]=\"inputUploadEvent\" (onUpload)=\"handleUpload($event)\" (onPreviewData)=\"handlePreviewData($event)\"> Images\r\n            </label>\r\n            <div fxFlex=\"100%\" class=\"mt1 mb2\" *ngIf=\"!!uploadProgress\">\r\n                <md-progress-bar [color]=\"primary\" [mode]=\"determinate\" [value]=\"uploadProgress\">\r\n                </md-progress-bar>\r\n            </div>\r\n        </div>\r\n    </md-dialog-content>\r\n\r\n    <!--TODO: align buttons to the bottom with-->\r\n    <md-dialog-actions style=\"margin: 0px;\">\r\n        <div fxLayout=\"row\" fxFlex fxLayoutAlign=\"end center\">\r\n            <button md-dialog-close md-button class=\"ml1\">Close</button>\r\n            <button md-button color=\"primary\" (click)=\"createItem()\">Create</button>\r\n        </div>\r\n    </md-dialog-actions>\r\n</div>"
+module.exports = "<div class=\"overflow-hidden\">\r\n    <h2 md-dialog-title>\r\n        Create Item\r\n\r\n    </h2>\r\n\r\n    <md-dialog-content>\r\n        <div fxLayout=\"column\">\r\n            <md-input-container fxFlex class=\"mt1\" hintLabel=\"{{titleError}}\">\r\n                <input mdInput placeholder=\"Title\" [(ngModel)]=\"item.title\">\r\n            </md-input-container>\r\n\r\n            <md-input-container fxFlex class=\"mt1\" hintLabel=\"{{descriptionError}}\">\r\n                <textarea mdInput placeholder=\"Description\" [(ngModel)]=\"item.description\"></textarea>\r\n            </md-input-container>\r\n\r\n            <div>\r\n                <img class=\"selected-pictures\" *ngFor=\"let imgData of previewData\" [src]=\"imgData\">\r\n            </div>\r\n            <label class=\"mt2 mb2 upload-image-button\">\r\n                <input multiple type=\"file\" id=\"file-upload\" ngFileSelect [options]=\"uploaderOptions\" [events]=\"inputUploadEvent\" (onUpload)=\"handleUpload($event)\" (onPreviewData)=\"handlePreviewData($event)\"> Images\r\n            </label>\r\n            <div fxFlex=\"100%\" class=\"mt1 mb2\" *ngIf=\"!!uploadProgress\">\r\n                <md-progress-bar [color]=\"primary\" [mode]=\"determinate\" [value]=\"uploadProgress\">\r\n                </md-progress-bar>\r\n            </div>\r\n        </div>\r\n    </md-dialog-content>\r\n\r\n    <!--TODO: align buttons to the bottom with-->\r\n    <md-dialog-actions style=\"margin: 0px;\">\r\n        <div fxLayout=\"row\" fxFlex fxLayoutAlign=\"end center\">\r\n            <button md-dialog-close md-button class=\"ml1\">Close</button>\r\n            <button md-button color=\"primary\" (click)=\"createItem()\">Create</button>\r\n        </div>\r\n    </md-dialog-actions>\r\n</div>"
 
 /***/ }),
 

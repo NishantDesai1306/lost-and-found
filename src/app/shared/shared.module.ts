@@ -1,26 +1,50 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, FactoryProvider, ModuleWithProviders } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import {
+    MatSidenavModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatSnackBarModule,
+    MatDialogModule
+  } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
+import { NO_ERRORS_SCHEMA } from '@angular/compiler/src/core';
+
 import { ConfirmComponent } from './confirm/confirm.component';
-import { ConfirmService } from './confirm.service';
-import { ItemService } from './item.service';
-import { UserService } from './user.service';
-import { AuthSerivce } from './auth.service';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA, FactoryProvider, OpaqueToken } from '@angular/core';
-import { NotificationService } from './notification.service';
-import { MaterialModule } from '@angular/material';
-import {ChatzzServiceProvider} from './chatzz.service.provider';
 
 @NgModule({
-    imports: [MaterialModule],
-    exports: [ConfirmComponent],
-    declarations: [ConfirmComponent],
-    providers: [
-        UserService,
-        AuthSerivce,
-        NotificationService,
-        ItemService,
-        ConfirmService,
-        ChatzzServiceProvider
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        FlexLayoutModule,
+
+        MatSidenavModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatSlideToggleModule,
+        MatMenuModule,
+        MatToolbarModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatSnackBarModule,
+        MatDialogModule
     ],
-    entryComponents: [ConfirmComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    declarations: [
+        ConfirmComponent
+    ],
+    entryComponents: [
+        ConfirmComponent
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
-export class SharedModule { }
+export class SharedModule {}

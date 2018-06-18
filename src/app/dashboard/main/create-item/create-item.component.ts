@@ -3,7 +3,7 @@ import { ItemService } from './../../../shared/item.service';
 import { Component, OnInit, EventEmitter, NgZone, Inject } from '@angular/core';
 import { NgUploaderOptions, UploadedFile } from 'ngx-uploader';
 import { NotificationService } from '../../../shared/notification.service';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
     templateUrl: './create-item.component.html'
@@ -31,7 +31,7 @@ export class CreateItemComponent implements OnInit {
         @Inject(NgZone)private zone: NgZone,
         private itemService: ItemService,
         private notificationService: NotificationService,
-        private dialogRef: MdDialogRef<CreateItemComponent>
+        private dialogRef: MatDialogRef<CreateItemComponent>
     ) {
         this.inputUploadEvent = new EventEmitter<string>();
      }

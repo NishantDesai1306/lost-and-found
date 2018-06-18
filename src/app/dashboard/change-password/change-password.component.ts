@@ -44,12 +44,11 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
         this.userService
             .changePassword(this.user.oldPassword, this.user.newPassword)
-            .subscribe(res => {
+            .subscribe((res: any) => {
                 if (res.status) {
                     this.notificationService.createSimpleNotification('Password Changed Succesfully');
                     this.router.navigateByUrl('/dashboard/user');
-                }
-                else {
+                } else {
                     this.oldPasswordError = res.reason;
                 }
             });

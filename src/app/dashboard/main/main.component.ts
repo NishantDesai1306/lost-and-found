@@ -4,9 +4,8 @@ import { ViewItemComponent } from './view-items/view-item.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
 import { ItemService } from './../../shared/item.service';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import {Subscription} from 'rxjs/Subscription';
-import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import { CreateItemComponent } from './create-item/create-item.component';
 import { UserService } from '../../shared/user.service';
 import { ConfirmService } from '../../shared/confirm.service';
@@ -29,8 +28,7 @@ export class MainComponent implements OnInit, OnDestroy {
     };
 
     constructor(
-        private dialog: MdDialog,
-        private media: ObservableMedia,
+        private dialog: MatDialog,
         private itemService: ItemService,
         private userService: UserService,
         private confirmService: ConfirmService,
@@ -39,16 +37,16 @@ export class MainComponent implements OnInit, OnDestroy {
     ) {
         const singleLaneModes = ['sm', 'xs'];
 
-        const watcher = this.media.subscribe((change: MediaChange) => {
-            if (singleLaneModes.indexOf(change.mqAlias) > -1) {
-                this.leftItems = this.copy.leftItems.concat(this.copy.rightItems);
-            } else {
-                this.leftItems = this.copy.leftItems;
-                this.rightItems = this.copy.rightItems;
-            }
-        });
+        // const watcher = this.media.subscribe((change: MediaChange) => {
+        //     if (singleLaneModes.indexOf(change.mqAlias) > -1) {
+        //         this.leftItems = this.copy.leftItems.concat(this.copy.rightItems);
+        //     } else {
+        //         this.leftItems = this.copy.leftItems;
+        //         this.rightItems = this.copy.rightItems;
+        //     }
+        // });
 
-        this.watchers.push(watcher);
+        // this.watchers.push(watcher);
     }
 
     loadItems() {
@@ -74,14 +72,14 @@ export class MainComponent implements OnInit, OnDestroy {
         watcher = this.userService.getUser().subscribe((user) => {
             this.user = user;
 
-            if(user.getId()) {
+            if (user.getId()) {
                 this.chatzzService.connect(user.getId());
             }
         });
         this.watchers.push(watcher);
 
         watcher = this.chatzzService.newMessage().subscribe((message) => {
-            switch(message.type) {
+            switch (message.type) {
                 case this.chatzzService.messageTypes.USER_DETAILS: {
                     const allMissedMessages = (<any>Object).values(message.data.missedMessages);
                     const allMissedMessagesCount = allMissedMessages.reduce((partialSum, messageSet) => {

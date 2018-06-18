@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import {MdSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class NotificationService {
     defaultDuration = 2000;
 
-    constructor(private snackBar: MdSnackBar) {}
+    constructor(private snackBar: MatSnackBar) {}
 
     createSimpleNotification(message: string, duration: number = this.defaultDuration) {
         this.snackBar.open(message, null, {

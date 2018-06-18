@@ -2,7 +2,7 @@ import { Component, OnInit, NgZone, Inject, EventEmitter, ViewChild, OnDestroy }
 import { Router } from '@angular/router';
 import {NgUploaderOptions, UploadedFile, NgUploaderService} from 'ngx-uploader';
 import { ModalDirective } from 'ng2-bootstrap';
-import objectFitImages from 'object-fit-images';
+import * as objectFitImages from 'object-fit-images';
 
 import {UserService} from './../../shared/user.service';
 import { NotificationService } from '../../shared/notification.service';
@@ -29,7 +29,7 @@ export class UserComponent implements OnInit, OnDestroy {
     loading = false;
 
     constructor(
-        private userService: UserService, 
+        private userService: UserService,
         @Inject(NgZone)private zone: NgZone,
         private router: Router,
         private notificationService: NotificationService

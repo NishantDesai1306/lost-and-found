@@ -6,19 +6,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-    userSerivce: UserService;
     username: string;
 
-    constructor(userSerivce: UserService) { 
-        this.userSerivce = userSerivce;
-    }
+    constructor(private userService: UserService) {}
 
-    ngOnInit() { 
-        var self = this;
-        self.userSerivce
+    ngOnInit() {
+        this.userService
             .getUser()
             .subscribe((newUser) => {
-                self.username = newUser.getUsername(); 
+                this.username = newUser.getUsername();
             });
     }
 }

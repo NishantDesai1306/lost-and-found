@@ -1,22 +1,26 @@
 import { UserService } from './user.service';
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import {Observable} from 'rxjs/Rx';
 
 // Import RxJs required methods
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-@Injectable()
-export class AuthSerivce {
+@Injectable({
+    providedIn: 'root'
+})
+export class AuthService {
 
     private username: string;
     private email: string;
     readonly authUrl = '/auth';
     private isLoggedIn = false;
 
-    constructor(private http: Http, 
-        private userService: UserService) {}
+    constructor(
+        private http: HttpClient,
+        private userService: UserService
+    ) {}
 
     isUserLoggedIn(): boolean {
         return this.isLoggedIn;
@@ -27,10 +31,10 @@ export class AuthSerivce {
         const loginUrl: string = this.authUrl + '/login';
 
         return self.http.post(loginUrl, {email, password, rememberMe})
-            .map((res: Response) => res.json())
+            .map((res: any) => res.json())
             .map((res) => {
                 self.isLoggedIn = res.status;
-                if(self.isLoggedIn) {
+                if (self.isLoggedIn) {
                     self.userService.setUser(res.data._id, res.data.username, res.data.email, res.data.profilePictureUrl);
                 }
                 return self.isLoggedIn;
@@ -43,7 +47,7 @@ export class AuthSerivce {
         const loginUrl: string = this.authUrl + '/register';
 
         return self.http.post(loginUrl, {email, username, password})
-            .map((res: Response) => res.json())
+            .map((res: any) => res.json())
             .map((res) => {
                 self.isLoggedIn = res.status;
                 if (self.isLoggedIn) {
@@ -59,11 +63,11 @@ export class AuthSerivce {
         const logoutUrl: string = this.authUrl + '/logout';
 
         return self.http.post(logoutUrl, {})
-            .map((res: Response) => res.json())
+            .map((res: any) => res.json())
             .map((res) => {
                 if (res.status) {
                     self.isLoggedIn = false;
-                    self.userService.setUser(null, null, null ,null);
+                    self.userService.setUser(null, null, null , null);
                 }
 
                 return res;
@@ -76,7 +80,7 @@ export class AuthSerivce {
         const getUserUrl = '/api/user/details';
 
         return self.http.get(getUserUrl)
-            .map((res: Response) => res.json())
+            .map((res: any) => res.json())
             .map((res) => {
                 if (res.status) {
                     self.isLoggedIn = true;

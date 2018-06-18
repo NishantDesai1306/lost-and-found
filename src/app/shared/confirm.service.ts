@@ -1,21 +1,26 @@
 import { Injectable } from '@angular/core';
-import { MdSnackBar, MdDialogRef, MdDialog } from '@angular/material';
+import { MatSnackBar, MatDialogRef, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { ConfirmComponent } from './confirm/confirm.component';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ConfirmService {
-    constructor(private dialog: MdDialog) {}
+    constructor(private dialog: MatDialog) {}
 
-    confirm(title = 'Confirm', message: string, confirmButtonText = 'Confirm', cancelButtonText = 'Cancel'): Observable<boolean> {
+    confirm(title = 'Confirm', description: string, confirmButtonText = 'Confirm', cancelButtonText = 'Cancel'): Observable<boolean> {
 
-        let dialogRef: MdDialogRef<ConfirmComponent>;
+        let dialogRef: MatDialogRef<ConfirmComponent>;
 
-        dialogRef = this.dialog.open(ConfirmComponent);
-        dialogRef.componentInstance.title = title;
-        dialogRef.componentInstance.description = message;
-        dialogRef.componentInstance.confirmButtonText = confirmButtonText;
-        dialogRef.componentInstance.cancelButtonText = cancelButtonText;
+        dialogRef = this.dialog.open(ConfirmComponent, {
+            data: {
+                title,
+                description,
+                confirmButtonText,
+                cancelButtonText
+            }
+        });
 
         return dialogRef.afterClosed();
     }

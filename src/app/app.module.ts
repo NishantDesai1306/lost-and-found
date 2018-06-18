@@ -1,17 +1,29 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  MatSidenavModule,
+  MatButtonModule,
+  MatIconModule,
+  MatCheckboxModule,
+  MatInputModule,
+  MatSlideToggleModule,
+  MatMenuModule,
+  MatToolbarModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatSnackBarModule
+} from '@angular/material';
+
+import { AppComponent } from './app.component';
 import { ItemCardComponent } from './dashboard/main/item-card/item-card.component';
 import { ViewItemComponent } from './dashboard/main/view-items/view-item.component';
 import { CreateItemComponent } from './dashboard/main/create-item/create-item.component';
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, OpaqueToken} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
-
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MaterialModule, MdSidenavModule} from '@angular/material';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {AppComponent} from './app.component';
-
 import { ChangePasswordComponent } from './dashboard/change-password/change-password.component';
 import { UserComponent } from './dashboard/user/user.component';
 import { MainComponent } from './dashboard/main/main.component';
@@ -49,23 +61,40 @@ import { NotificationCountService } from './dashboard/services/notification-coun
     EditItemComponent,
     ViewItemComponent
   ],
-  entryComponents: [ViewItemComponent, CreateItemComponent, EditItemComponent],
+  entryComponents: [
+    ViewItemComponent,
+    CreateItemComponent,
+    EditItemComponent
+  ],
   imports: [
+    SharedModule,
+
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     HttpModule,
     RouterModule,
     LoginModule,
-    SharedModule,
     FormsModule,
     NgUploaderModule,
 
     ProgressbarModule.forRoot(),
     ModalModule.forRoot(),
 
-    MaterialModule,
-    MdSidenavModule,
     FlexLayoutModule,
+
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatSnackBarModule,
+    MatSidenavModule,
+
     BrowserAnimationsModule,
     CarouselModule.forRoot()
   ],

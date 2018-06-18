@@ -7,10 +7,12 @@ interface SocketMessage {
     data: any;
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ChatzzService {
     private socket;
-    socketMessageBehaviousSubject: BehaviorSubject<SocketMessage>;
+    socketMessageBehaviourSubject: BehaviorSubject<SocketMessage>;
 
     messageTypes = {
         OLD_MESSAGES: 'old-messages',
@@ -28,7 +30,7 @@ export class ChatzzService {
     };
 
     constructor(private serverUrl: string) {
-        if(!serverUrl) {
+        if (!serverUrl) {
             throw new Error('invalid server url provided');
         }
         else {
@@ -37,17 +39,17 @@ export class ChatzzService {
 
         this.socket = io(serverUrl);
 
-        this.socketMessageBehaviousSubject = new BehaviorSubject<any>({});
+        this.socketMessageBehaviourSubject = new BehaviorSubject<any>({});
 
         this.socket.on('chatzz', (data) => {
             console.log(data.type, data.data);
-            this.socketMessageBehaviousSubject.next(data);
+            this.socketMessageBehaviourSubject.next(data);
         });
     }
 
     newMessage(): Observable<any> {
         return this
-            .socketMessageBehaviousSubject
+            .socketMessageBehaviourSubject
             .asObservable()
             .share()
             .distinctUntilChanged();
@@ -58,7 +60,7 @@ export class ChatzzService {
             this.socket = this.socket.open();
         }
 
-        if(!userId) {
+        if (!userId) {
             return console.error('null UserId passed');
         }
 
@@ -134,7 +136,7 @@ export class ChatzzService {
 export const getChatzzService = (url: string): ChatzzService => {
     let chatzzServiceInstance: ChatzzService = null;
 
-    if(!chatzzServiceInstance) {
+    if (!chatzzServiceInstance) {
         chatzzServiceInstance = new ChatzzService(url);
     }
     return chatzzServiceInstance;

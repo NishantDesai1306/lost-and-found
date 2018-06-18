@@ -4,7 +4,7 @@ import { Component, OnInit, EventEmitter, NgZone, Inject } from '@angular/core';
 import { NgUploaderOptions, UploadedFile } from 'ngx-uploader';
 import { NotificationService } from '../../../shared/notification.service';
 import { ConfirmService } from '../../../shared/confirm.service';
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
     templateUrl: './edit-item.component.html'
@@ -30,7 +30,7 @@ export class EditItemComponent implements OnInit {
         private itemService: ItemService,
         private notificationService: NotificationService,
         private confirmService: ConfirmService,
-        private dialogRef: MdDialogRef<EditItemComponent>
+        private dialogRef: MatDialogRef<EditItemComponent>
     ) {
         this.inputUploadEvent = new EventEmitter<string>();
      }
@@ -89,7 +89,7 @@ export class EditItemComponent implements OnInit {
     }
 
     deleteImage(index) {
-        if(this.item.images && this.item.images.length === 1) {
+        if (this.item.images && this.item.images.length === 1) {
             return this.notificationService.createSimpleNotification('Item should have atleast single image');
         }
 

@@ -1,12 +1,12 @@
+import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { ObservableMedia, MediaChange } from '@angular/flex-layout';
+import { Component, OnInit, ContentChild, ViewChild, Inject, OnDestroy } from '@angular/core';
+import { MatSidenavModule, MatSidenav } from '@angular/material';
+import { BehaviorSubject } from 'rxjs/Rx';
 import { NotificationCountService } from './../services/notification-count.service';
 import { ChatzzService } from './../../shared/chatzz.service.provider';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ObservableMedia, MediaChange } from '@angular/flex-layout';
-import { Subscription } from 'rxjs/Subscription';
-import { Component, OnInit, ContentChild, ViewChild, Inject, OnDestroy } from '@angular/core';
 import { UserService } from '../../shared/user.service';
-import { MdSidenavModule, MdSidenav } from '@angular/material';
-import { BehaviorSubject } from 'rxjs/Rx';
 
 @Component({
     templateUrl: './chat.component.html'
@@ -32,16 +32,16 @@ export class ChatComponent implements OnInit, OnDestroy {
     connectedUsers = [];
     missedMessageMap = {};
 
-    @ViewChild(MdSidenav) sideNav: MdSidenav;
+    @ViewChild(MatSidenav) sideNav: MatSidenav;
 
     constructor(
-        private userSerivce: UserService,
+        private userService: UserService,
         private media: ObservableMedia,
         private route: ActivatedRoute,
         @Inject(ChatzzService) private chatzzService,
         private notificationCountService: NotificationCountService
     ) {
-        this.userSerivce = userSerivce;
+        this.userService = userService;
         this.screenHeight = window.innerHeight - this.extraMargin;
         this.companionUserBehaviourSubject = new BehaviorSubject(null);
     }
@@ -53,7 +53,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     ngOnInit() {
         let watcher;
 
-        watcher = this.userSerivce
+        watcher = this.userService
             .getUser()
             .subscribe((newUser) => {
                 this.userId = newUser.getId();
@@ -91,9 +91,9 @@ export class ChatComponent implements OnInit, OnDestroy {
         });
 
         watcher = this.chatzzService.newMessage().subscribe((message) => {
-            switch(message.type) {
+            switch (message.type) {
                 case this.chatzzService.messageTypes.OLD_MESSAGES: {
-                    if(message.data && message.data.length) {
+                    if (message.data && message.data.length) {
                         const chatRoomId = message.data[0].chatRoom;
                         this.missedMessageMap[chatRoomId] = 0;
                     }
@@ -116,28 +116,26 @@ export class ChatComponent implements OnInit, OnDestroy {
                     break;
                 }
                 case this.chatzzService.messageTypes.NEW_MESSAGE: {
-                    if (message.data.to.user._id === this.userId && 
-                        message.data.status !== this.chatzzService.messageStatus.READ && 
+                    if (message.data.to.user._id === this.userId &&
+                        message.data.status !== this.chatzzService.messageStatus.READ &&
                         this.chatData.companionUser._id === message.data.from.user._id) {
 
                         this.chatData.messages.push(message.data);
                         this.chatzzService.markMessageRead(message.data._id);
-                    }
-                    else {
-                        if(this.missedMessageMap[message.data.chatRoom]) {
+                    } else {
+                        if (this.missedMessageMap[message.data.chatRoom]) {
                             this.missedMessageMap[message.data.chatRoom]++;
-                        }
-                        else {
+                        } else {
                             this.missedMessageMap[message.data.chatRoom] = 1;
                         }
                     }
 
-                    if(message.data.from.user._id !== this.chatData.lastUserIdWithImage) {
+                    if (message.data.from.user._id !== this.chatData.lastUserIdWithImage) {
                         message.data.showImage = true;
                         this.chatData.lastUserIdWithImage = message.data.from.user._id;
                     }
 
-                    if(message.data.from.user._id === this.userId) {
+                    if (message.data.from.user._id === this.userId) {
                         this.chatData.messages.push(message.data);
                     }
                     break;
@@ -145,7 +143,7 @@ export class ChatComponent implements OnInit, OnDestroy {
                 case this.chatzzService.messageTypes.MESSAGE_STATUS_CHANGED:
                 {
                     this.chatData.messages.forEach((messageObj) => {
-                        if(messageObj._id === message.data.message._id) {
+                        if (messageObj._id === message.data.message._id) {
                             messageObj = Object.assign(messageObj, message.data.message);
                         }
                     });
@@ -168,8 +166,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
             if (this.isScreeSizeLg()) {
                 this.sideNav.open();
-            }
-            else {
+            } else {
                 this.sideNav.close();
             }
         });
@@ -189,7 +186,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     sendMessage(message: string) {
-        if(message) {
+        if (message) {
             this.chatzzService.sendMessage(this.chatData.companionUser._id, message);
         }
     }
@@ -197,10 +194,10 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.chatzzService.getChatMessages(userId);
     }
     getMessageAlignment(messageObj) {
-        return (messageObj.from.user._id === this.userId ? "end" : "start") + " start"; 
+        return (messageObj.from.user._id === this.userId ? 'end' : 'start') + ' start';
     }
     getMessageStatusIcon(messageObj) {
-        switch(messageObj.status) {
+        switch (messageObj.status) {
             case this.chatzzService.messageStatus.NOT_SENT: return 'done';
             case this.chatzzService.messageStatus.SENT:
             case this.chatzzService.messageStatus.READ: return 'done_all';

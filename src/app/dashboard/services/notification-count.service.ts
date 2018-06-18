@@ -16,7 +16,7 @@ export class NotificationCountService {
     setCount(count: number) {
         this.count = count;
 
-        if(this.updateFlag) {
+        if (this.updateFlag) {
             this.notificationCountSubject.next(this.count);
         }
     }
@@ -24,7 +24,7 @@ export class NotificationCountService {
     addToCount(num: number) {
         this.count += num;
 
-        if(this.updateFlag) {
+        if (this.updateFlag) {
             this.notificationCountSubject.next(this.count);
         }
     }

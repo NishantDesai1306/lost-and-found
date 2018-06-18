@@ -1,9 +1,9 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, Inject } from '@angular/core';
-import {MdIconRegistry, MdDialog, MdChipsModule} from '@angular/material';
+import { MatIconModule, MatDialogModule, MatChipsModule} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import { UserService } from './shared/user.service';
-import { AuthSerivce } from './shared/auth.service';
+import { AuthService } from './shared/auth.service';
 import {ChatzzServiceProvider, ChatzzService} from './shared/chatzz.service.provider';
 import { NotificationCountService } from './dashboard/services/notification-count.service';
 
@@ -17,8 +17,8 @@ export class AppComponent implements OnInit {
     notificationCount: number;
 
     constructor(
-        private userSerivce: UserService,
-        private authService: AuthSerivce,
+        private userService: UserService,
+        private authService: AuthService,
         private router: Router,
         @Inject(ChatzzService) private chatzzService,
         private notificationCountService: NotificationCountService) {}
@@ -39,13 +39,13 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userSerivce
+        this.userService
             .getUser()
             .subscribe((newUser) => {
                 this.username = newUser.getUsername(); 
                 this.chatzzService.newMessage()
                 .subscribe((message) => {
-                    if(message.type === this.chatzzService.messageTypes.CHAT_USER_ADDED) {
+                    if (message.type === this.chatzzService.messageTypes.CHAT_USER_ADDED) {
                         const connectedUsers = newUser.getConnectedUsers();
                         connectedUsers.push(message.data);
                         newUser.setConnectedUsers(connectedUsers);

@@ -1,4 +1,4 @@
-import {AuthSerivce} from './../shared/auth.service';
+import {AuthService} from './../shared/auth.service';
 
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
     passwordError = '';
 
     constructor(
-        private authService: AuthSerivce,
+        private authService: AuthService,
         private router: Router,
         private route: ActivatedRoute,
         private notificationService: NotificationService) {}
@@ -50,13 +50,13 @@ export class LoginComponent implements OnInit {
             .subscribe(params => {
                  const errorMessage = params['errorMessage'];
 
-                 if(errorMessage) {
+                 if (errorMessage) {
                      this.notificationService.createSimpleNotification(errorMessage, 5000);
                  }
             });
 
         this.authService.getUserDetails().subscribe(isSuccessfull => {
-            if(isSuccessfull) {
+            if (isSuccessfull) {
                 this.router.navigateByUrl('/dashboard');
             }
         });

@@ -5,7 +5,7 @@ import { ViewItemComponent } from './../view-items/view-item.component';
 import { Response } from '@angular/http';
 import { Component, OnInit, EventEmitter, NgZone, Inject, Input, Output, OnDestroy } from '@angular/core';
 import { UserService } from '../../../shared/user.service';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ConfirmService } from '../../../shared/confirm.service';
 import { ItemService } from '../../../shared/item.service';
 import { ChatzzService } from '../../../shared/chatzz.service.provider';
@@ -25,7 +25,7 @@ export class ItemCardComponent implements OnInit, OnDestroy {
 
     constructor(
         private userService: UserService,
-        private dialog: MdDialog,
+        private dialog: MatDialog,
         private confirmService: ConfirmService,
         private itemService: ItemService,
         private router: Router,
@@ -78,7 +78,7 @@ export class ItemCardComponent implements OnInit, OnDestroy {
     deleteItem() {
         this.confirmService.confirm('Delete Item',  `Are you sure you want to delete item ${this.item.title} ?`)
         .subscribe((res) => {
-            if(res) {
+            if (res) {
                 this.itemService.deleteItem(this.item)
                 .subscribe((response) => {
                     console.log(response);
@@ -110,7 +110,7 @@ export class ItemCardComponent implements OnInit, OnDestroy {
 
         if (!isUserAlreadyConnected) {
             this.chatzzService.addChatUser(userId, (err, userObj) => {
-                if(err) {
+                if (err) {
                     return console.error(err);
                 }
 

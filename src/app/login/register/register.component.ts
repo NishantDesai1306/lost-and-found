@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { AuthSerivce } from './../../shared/auth.service';
+import { AuthService } from './../../shared/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
     usernameError = '';
     passwordError = '';
 
-    constructor(private authServie: AuthSerivce, private router: Router) { }
+    constructor(private authServie: AuthService, private router: Router) { }
 
     register() {
         const self = this;

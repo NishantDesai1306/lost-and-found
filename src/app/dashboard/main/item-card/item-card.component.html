@@ -1,27 +1,38 @@
-<md-card>
-    <md-card-header>
-        <md-card-title>{{item.title}}</md-card-title>
-        <md-card-subtitle>{{'By '+item.owner.username}}</md-card-subtitle>
-        <div md-card-avatar [ngStyle]="getUserAvatarStyle()"></div>
-    </md-card-header>
+<mat-card class="item-card my-2">
+    <mat-card-header>
+        <mat-card-title>{{item.title}}</mat-card-title>
+        <mat-card-subtitle>{{'By '+item.owner.username}}</mat-card-subtitle>
+        <div mat-card-avatar [ngStyle]="getUserAvatarStyle()"></div>
+    </mat-card-header>
     <div fxLayout="row" *ngIf="!imageLoaded">
-        <md-spinner fxFlex></md-spinner>
+        <mat-spinner fxFlex></mat-spinner>
     </div>
-    <img md-card-image (load)="imageLoadedSuccessfully()" [hidden]="!imageLoaded" [src]="replaceSlashes(item.images[0].path)">
-    <md-card-content>
-        <h4>
-            Description
-        </h4>
-        <h5>{{item.description}}</h5>
-    </md-card-content>
-    <md-card-actions>
+    <img mat-card-image (load)="imageLoadedSuccessfully()" [hidden]="!imageLoaded" [src]="replaceSlashes(item.images[0].path)">
+    <mat-card-content>
+        <p>
+            <strong>
+                Description
+            </strong>
+        </p>
+        <p>{{item.description}}</p>
+    </mat-card-content>
+    <mat-card-actions>
         <div *ngIf="user._id === item.owner._id">
-            <button md-button (click)="editItem()">EDIT</button>
-            <button md-button (click)="deleteItem()">DELETE</button>
+            <button mat-button color="primary" (click)="editItem()">
+                <mat-icon class="pr-1">edit</mat-icon>
+                <span>Edit</span>
+            </button>
+            <button mat-button color="warn" (click)="deleteItem()">
+                <mat-icon class="pr-1">delete</mat-icon>
+                <span>Delete</span>
+            </button>
         </div>
         <div *ngIf="user._id !== item.owner._id">
-            <button md-button (click)="contactUser(item.owner._id)">CONTACT</button>
-            <button md-button (click)="viewItem()">VIEW</button>
+            <button mat-button color="primary" (click)="contactUser(item.owner._id)">
+                <mat-icon class="pr-1">person</mat-icon>
+                <span>Contact</span>
+            </button>
+            <button mat-button color="primary" (click)="viewItem()">View</button>
         </div>
-    </md-card-actions>
-</md-card>
+    </mat-card-actions>
+</mat-card>

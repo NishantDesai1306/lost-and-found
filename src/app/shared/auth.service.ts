@@ -31,15 +31,15 @@ export class AuthService {
         const loginUrl: string = this.authUrl + '/login';
 
         return self.http.post(loginUrl, {email, password, rememberMe})
-            .map((res: any) => res.json())
-            .map((res) => {
+            // .map((res: any) => res.json())
+            .map((res: any) => {
                 self.isLoggedIn = res.status;
                 if (self.isLoggedIn) {
                     self.userService.setUser(res.data._id, res.data.username, res.data.email, res.data.profilePictureUrl);
                 }
                 return self.isLoggedIn;
             })
-            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+            .catch((error: any) => Observable.throw(error || 'Server error'));
     }
 
     register(email: string, username: string, password: string) {
@@ -47,15 +47,15 @@ export class AuthService {
         const loginUrl: string = this.authUrl + '/register';
 
         return self.http.post(loginUrl, {email, username, password})
-            .map((res: any) => res.json())
-            .map((res) => {
+            // .map((res: any) => res.json())
+            .map((res: any) => {
                 self.isLoggedIn = res.status;
                 if (self.isLoggedIn) {
                     self.userService.setUser(res.data._id, res.data.username, res.data.email, res.data.profilePictureUrl);
                 }
                 return self.isLoggedIn;
             })
-            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+            .catch((error: any) => Observable.throw(error || 'Server error'));
     }
 
     logout() {
@@ -63,8 +63,8 @@ export class AuthService {
         const logoutUrl: string = this.authUrl + '/logout';
 
         return self.http.post(logoutUrl, {})
-            .map((res: any) => res.json())
-            .map((res) => {
+            // .map((res: any) => res.json())
+            .map((res: any) => {
                 if (res.status) {
                     self.isLoggedIn = false;
                     self.userService.setUser(null, null, null , null);
@@ -72,7 +72,7 @@ export class AuthService {
 
                 return res;
             })
-            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+            .catch((error: any) => Observable.throw(error || 'Server error'));
     }
 
     getUserDetails() {
@@ -80,8 +80,8 @@ export class AuthService {
         const getUserUrl = '/api/user/details';
 
         return self.http.get(getUserUrl)
-            .map((res: any) => res.json())
-            .map((res) => {
+            // .map((res: any) => res.json())
+            .map((res: any) => {
                 if (res.status) {
                     self.isLoggedIn = true;
                     self.userService.setUser(res.data._id, res.data.username, res.data.email, res.data.profilePictureUrl);
@@ -89,6 +89,9 @@ export class AuthService {
 
                 return res.status;
             })
-            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+            .catch((error: any) => {
+                console.log(error);
+                return Observable.throw(error || 'Server error');
+            });
     }
 }

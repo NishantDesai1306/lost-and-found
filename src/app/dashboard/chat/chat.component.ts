@@ -5,8 +5,9 @@ import { Component, OnInit, ContentChild, ViewChild, Inject, OnDestroy } from '@
 import { MatSidenavModule, MatSidenav } from '@angular/material';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { NotificationCountService } from './../services/notification-count.service';
-import { ChatzzService } from './../../shared/chatzz.service.provider';
+// import { ChatzzService } from './../../shared/chatzz.service.provider';
 import { UserService } from '../../shared/user.service';
+import { ChatzzService } from '../../shared/chatzz.service';
 
 @Component({
     templateUrl: './chat.component.html'

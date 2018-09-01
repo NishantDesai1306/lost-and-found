@@ -1,37 +1,38 @@
 <div class="overflow-hidden">
-    <h2 md-dialog-title>
+    <h2 mat-dialog-title>
         Create Item
-
     </h2>
 
-    <md-dialog-content>
+    <mat-dialog-content>
+        <h4 class="m-0">Item Details:</h4>
         <div fxLayout="column">
-            <md-input-container fxFlex class="mt1" hintLabel="{{titleError}}">
-                <input mdInput placeholder="Title" [(ngModel)]="item.title">
-            </md-input-container>
+            <mat-form-field fxFlex class="mt-1" hintLabel="{{titleError}}">
+                <input matInput placeholder="Title" [(ngModel)]="item.title">
+            </mat-form-field>
 
-            <md-input-container fxFlex class="mt1" hintLabel="{{descriptionError}}">
-                <textarea mdInput placeholder="Description" [(ngModel)]="item.description"></textarea>
-            </md-input-container>
+            <mat-form-field fxFlex class="mt-1" hintLabel="{{descriptionError}}">
+                <textarea matInput placeholder="Description" [(ngModel)]="item.description"></textarea>
+            </mat-form-field>
 
             <div>
-                <img class="selected-pictures" *ngFor="let imgData of previewData" [src]="imgData">
+                <img
+                    class="selected-pictures"
+                    *ngFor="let imgData of previewData"
+                    [src]="imgData"
+                />
             </div>
-            <label class="mt2 mb2 upload-image-button">
-                <input multiple type="file" id="file-upload" ngFileSelect [options]="uploaderOptions" [events]="inputUploadEvent" (onUpload)="handleUpload($event)" (onPreviewData)="handlePreviewData($event)"> Images
-            </label>
-            <div fxFlex="100%" class="mt1 mb2" *ngIf="!!uploadProgress">
-                <md-progress-bar [color]="primary" [mode]="determinate" [value]="uploadProgress">
-                </md-progress-bar>
-            </div>
+            
+            <app-upload-component
+                [upload]="creating"
+                (onUpload)="onUploadComplete($event)"
+            ></app-upload-component>
         </div>
-    </md-dialog-content>
+    </mat-dialog-content>
 
-    <!--TODO: align buttons to the bottom with-->
-    <md-dialog-actions style="margin: 0px;">
+    <mat-dialog-actions class="m-0">
         <div fxLayout="row" fxFlex fxLayoutAlign="end center">
-            <button md-dialog-close md-button class="ml1">Close</button>
-            <button md-button color="primary" (click)="createItem()">Create</button>
+            <button mat-dialog-close mat-button class="ml-1" (click)="cancel()">Close</button>
+            <button mat-button color="primary" (click)="createItem()">Create</button>
         </div>
-    </md-dialog-actions>
+    </mat-dialog-actions>
 </div>

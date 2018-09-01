@@ -1,9 +1,9 @@
 <div class="overflow-hidden">
-    <h2 md-dialog-title>
+    <h2 mat-dialog-title>
         {{item.title}}
     </h2>
 
-    <md-dialog-content>
+    <mat-dialog-content>
         <div fxLayout="column">
             <div style="height: 550px;">
                 <carousel>
@@ -18,13 +18,13 @@
                 {{item.description}}
             </div>
         </div>
-    </md-dialog-content>
+    </mat-dialog-content>
 
     <!--TODO: align buttons to the bottom with-->
-    <md-dialog-actions style="margin: 0px;">
+    <mat-dialog-actions style="margin: 0px;">
         <div fxLayout="row" fxFlex fxLayoutAlign="end center">
-            <button md-dialog-close md-button class="ml1">Close</button>
-            <button md-button color="primary">Contact</button>
+            <button mat-dialog-close mat-button class="ml1">Close</button>
+            <button mat-button color="primary">Contact</button>
         </div>
-    </md-dialog-actions>
+    </mat-dialog-actions>
 </div>

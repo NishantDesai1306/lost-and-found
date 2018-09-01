@@ -1,4 +1,7 @@
-@import '~@angular/material/_theming';
+@import '~@angular/material/_theming.scss';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~bootstrap-utilities";
+
 @import './app/dashboard/main/main.component.scss';
 @import './app/dashboard/main/create-item/create-item.component.scss';
 @import './app/dashboard/main/edit-item/edit-item.component.scss';
@@ -33,12 +36,12 @@ body {
 
 .white-input {
     color: white;
-    .mat-input-placeholder {
+    .mat-form-field-label {
         color: white !important;
     }
-    .mat-input-underline {
+    .mat-form-field-underline {
         background: mat-color($mat-grey, 300);
-        .mat-input-ripple {
+        .mat-form-field-ripple {
             background: white;
         }
     }
@@ -48,8 +51,13 @@ body {
     background: mat-color($mat-grey, 300) !important;
 }
 
-.white-progress-bar .mat-progress-bar-fill::after {
-    background: white;
+.white-progress-bar {
+    .mat-progress-bar-element {
+        background: lightgray !important;
+    }
+    .mat-progress-bar-fill::after {
+        background-color: white !important;
+    }
 }
 
 .mat-basic-chip {
@@ -62,4 +70,70 @@ body {
     position: relative;
     left: -20px;
     top: -12px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.homepage-button {
+    height: 60px;
+    font-size: 20px;
+}
+
+.basic-trigger-thumbnail-container {
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    border: 1px solid #dddddd;
+    padding: 5px;
+    margin: 10px;
+    position: relative;
+
+    .basic-trigger-thumbnail {
+        max-width: 100px;
+        max-height: 100px;
+    }
+
+    .thumbnail-delete-button {
+        cursor: pointer;
+        color: white;
+        height: 20px;
+        width: 20px;
+        text-align: center;
+        border-radius: 3px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: mat-color($mat-red, 900);
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -ms-border-radius: 3px;
+        -o-border-radius: 3px;
+
+        .mat-icon {
+            height: 100%;
+            width: 100%;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+        }
+    }
+}
+
+.masonry-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.flex-shrink-1 {
+    -ms-flex-negative: 1!important;
+    flex-shrink: 1!important;
+}
+
+.flex-grow-1 {
+    -ms-flex-positive: 1!important;
+    flex-grow: 1!important;
 }

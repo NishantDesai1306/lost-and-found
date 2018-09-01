@@ -1,5 +1,5 @@
 import { NotificationCountService } from './../services/notification-count.service';
-import { ChatzzService } from './../../shared/chatzz.service.provider';
+// import { ChatzzService } from './../../shared/chatzz.service.provider';
 import { ViewItemComponent } from './view-items/view-item.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
 import { ItemService } from './../../shared/item.service';
@@ -9,6 +9,7 @@ import {Subscription} from 'rxjs/Subscription';
 import { CreateItemComponent } from './create-item/create-item.component';
 import { UserService } from '../../shared/user.service';
 import { ConfirmService } from '../../shared/confirm.service';
+import { ChatzzService } from '../../shared/chatzz.service';
 
 @Component({
     templateUrl: './main.component.html'
@@ -52,7 +53,7 @@ export class MainComponent implements OnInit, OnDestroy {
     loadItems() {
         this.loadingItems = true;
 
-        this.itemService.getItems().subscribe((res) => {
+        this.itemService.getItems().subscribe((res: any) => {
             if (res.status) {
                 const items = res.data;
                 this.copy.rightItems = this.rightItems = items.splice(0, items.length / 2);

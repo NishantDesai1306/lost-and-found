@@ -9,10 +9,12 @@
     display: none;
 }
 
-.avatar-100-image-overlay input[type="file"] {
+input.hidden-file-select {
     position: absolute;
     opacity: 0;
     height: 100%;
+    top: 0;
+    left: 0;
     width: 100%;
 }
 

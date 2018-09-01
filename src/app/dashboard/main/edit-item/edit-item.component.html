@@ -1,38 +1,31 @@
 <div class="overflow-hidden">
-    <h2 md-dialog-title>
+    <h2 mat-dialog-title>
         Edit Item
     </h2>
 
-    <md-dialog-content>
+    <mat-dialog-content>
+        <h4 class="m-0">Item Details:</h4>
         <div fxLayout="column">
-            <md-input-container fxFlex class="mt1" hintLabel="{{titleError}}">
-                <input mdInput placeholder="Title" [(ngModel)]="item.title">
-            </md-input-container>
+            <mat-form-field fxFlex class="mt-1" hintLabel="{{titleError}}">
+                <input matInput placeholder="Title" [(ngModel)]="item.title">
+            </mat-form-field>
 
-            <md-input-container fxFlex class="mt1" hintLabel="{{descriptionError}}">
-                <textarea mdInput placeholder="Description" [(ngModel)]="item.description"></textarea>
-            </md-input-container>
+            <mat-form-field fxFlex class="mt-1" hintLabel="{{descriptionError}}">
+                <textarea matInput placeholder="Description" [(ngModel)]="item.description"></textarea>
+            </mat-form-field>
 
-            <div fxFlex="100%" class="mt1 mb2" *ngIf="!!uploadProgress">
-                <md-progress-bar class="white-progress-bar" [color]="primary" [mode]="determinate" [value]="uploadProgress">
-                </md-progress-bar>
+            <div fxFlex="100%" class="mt-1 mb-2" *ngIf="!!uploadProgress">
+                <mat-progress-bar class="white-progress-bar" [color]="primary" [mode]="determinate" [value]="uploadProgress">
+                </mat-progress-bar>
             </div>
 
-            <h4>Images</h4>
-            <div style="display: flex;">
-                <div class="image-overlay-wrapper" *ngFor="let imgData of item.images; let i = index;">
-                    <div style="position: relative;">
-                        <div class="image-overlay white-text-color" (click)="deleteImage(i)">
-                            <span>
-                                <b>Delete</b>&nbsp;
-                            </span>
-                            <md-icon>delete</md-icon>
-                        </div>
-                    </div>
-                    <img class="selected-pictures" [src]="replaceSlashes(imgData.path)">
-                </div>
-            </div>
-
+            <h4 class="m-0">Images:</h4>
+            <image-preview-component
+                [fileField]="'file'"
+                [images]="item.images"
+                (remove)="deleteImage($event)"
+            ></image-preview-component>
+            
             <div *ngIf="previewData && previewData.length">
                 <h4>Upload Images</h4>
                 <div>
@@ -40,21 +33,27 @@
                 </div>
             </div>
 
-            <label class="mt2 mb2 upload-image-button">
-                <input multiple type="file" id="file-upload" ngFileSelect [options]="uploaderOptions" [events]="inputUploadEvent" (onUpload)="handleUpload($event)" (onPreviewData)="handlePreviewData($event)"> Images
-            </label>
-            <div fxFlex="100%" class="mt1 mb2" *ngIf="!!uploadProgress">
-                <md-progress-bar [color]="primary" [mode]="determinate" [value]="uploadProgress">
-                </md-progress-bar>
+            <app-upload-component
+                [upload]="uploadImages"
+                (onUpload)="saveItem($event)"
+            ></app-upload-component>
+
+            <div fxFlex="100%" class="mt-1 mb-2" *ngIf="!!uploadProgress">
+                <mat-progress-bar [color]="primary" [mode]="determinate" [value]="uploadProgress">
+                </mat-progress-bar>
             </div>
         </div>
-    </md-dialog-content>
+    </mat-dialog-content>
 
     <!--TODO: align buttons to the bottom with-->
-    <md-dialog-actions style="margin: 0px;">
+    <mat-dialog-actions style="margin: 0px;">
         <div fxLayout="row" fxFlex fxLayoutAlign="end center">
-            <button md-dialog-close md-button class="ml1">Close</button>
-            <button md-button color="primary" (click)="editItem()">Edit</button>
+            <button mat-dialog-close mat-button class="ml1" (click)="cancel()">
+                Close
+            </button>
+            <button mat-button color="primary" (click)="editItem()">
+                Edit
+            </button>
         </div>
-    </md-dialog-actions>
+    </mat-dialog-actions>
 </div>

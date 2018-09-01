@@ -11,8 +11,7 @@ export class DashboardCanActivateGuard implements CanActivate {
     canActivate(): boolean {
         if (this.authService.isUserLoggedIn()) {
             return true;
-        }
-        else {
+        } else {
             const navigationExtras: NavigationExtras = {
                 queryParams: { 'errorMessage': 'You have to login first' }
             };

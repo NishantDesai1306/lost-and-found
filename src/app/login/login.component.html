@@ -1,37 +1,38 @@
-<div fxFlex="100%" class="mt4 pt4" fxLayout="column" fxLayoutAlign="center stretch">
-    <div class="content mt4" fxLayout="row" fxLayoutGap="16px">
-        <div fxFlex.lt-sm="100%" fxFlex="70%" fxFlexOffset.gt-xs="15%">
-            <div fxLayout="row">
+<div fxFlex="100%" class="my-4 py-4" fxLayout="column" fxLayoutAlign="center stretch">
+    <div fxLayout="row" class="my-4 py-4">
+        <div fxFlex.lt-sm="100%" fxFlex="70%" fxFlexOffset.gt-xs="15%" class="my-4 py-4">
+            <div fxLayout="row" class="my-4 py-4">
                 <div fxFlex.gt-sm="50%" fxFlexOffset.gt-sm="25%">
-                    <md-card class="indigo-background-color">
-                        <md-card-header>
+                    <mat-card class="indigo-background-color">
+                        <mat-card-header>
                             <div fxFlex fxLayoutAlign="center center">
                                 <h2 class="white-text-color">Login</h2>
                             </div>
-                        </md-card-header>
-                        <md-card-content>
+                        </mat-card-header>
+                        <mat-card-content>
                             <div fxLayout="column">
-                                <md-input-container fxFlex class="white-input mt1" hintLabel="{{usernameError}}">
-                                    <input mdInput placeholder="Username" [(ngModel)]="user.email">
-                                </md-input-container>
+                                <mat-form-field fxFlex class="white-input mt-1" hintLabel="{{usernameError}}">
+                                    <input matInput placeholder="Username" [(ngModel)]="user.email">
+                                </mat-form-field>
 
-                                <md-input-container fxFlex class="white-input mt1" hintLabel="{{passwordError}}">
-                                    <input mdInput placeholder="Password" type="password" [(ngModel)]="user.password">
-                                </md-input-container>
+                                <mat-form-field fxFlex class="white-input mt-1" hintLabel="{{passwordError}}">
+                                    <input matInput placeholder="Password" type="password" [(ngModel)]="user.password">
+                                </mat-form-field>
 
-                                <div class="mt3" fxFlex="100%">
+                                <div class="mt-3" fxFlex="100%">
                                     <div fxFlex="35%" fxFlexOffset="10%">
-                                        <button md-raised-button fxFlex (click)="login()">Login</button>
+                                        <button class="full-width" mat-raised-button (click)="login()">Login</button>
                                     </div>
                                     <div fxFlex="35%" fxFlexOffset="10%">
-                                        <button routerLink="/register" md-raised-button fxFlex>Register</button>
+                                        <button class="full-width" routerLink="/register" mat-raised-button>Register</button>
                                     </div>
                                 </div>
                             </div>
-                        </md-card-content>
-                    </md-card>
+                        </mat-card-content>
+                    </mat-card>
                 </div>
             </div>
         </div>
+        <!-- <div fxFlex="30%" style="background: hotpink;"></div> -->
     </div>
 </div>

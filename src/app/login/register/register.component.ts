@@ -35,8 +35,8 @@ export class RegisterComponent implements OnInit {
 
         self.authServie
         .register(self.user.email, self.user.username, self.user.password)
-        .subscribe((isSuccessfull) => {
-            if (isSuccessfull) {
+        .subscribe((isSuccessful) => {
+            if (isSuccessful) {
                 self.router.navigateByUrl('/dashboard');
             }
             else {

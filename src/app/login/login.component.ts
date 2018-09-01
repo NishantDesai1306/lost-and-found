@@ -32,9 +32,9 @@ export class LoginComponent implements OnInit {
 
         this.authService
             .login(this.user.email, this.user.password, this.rememberMe)
-            .subscribe((isSuccessfull) => {
-                if (isSuccessfull) {
-                    this.router.navigateByUrl('/dashboard')
+            .subscribe((isSuccessful) => {
+                if (isSuccessful) {
+                    this.router.navigateByUrl('/dashboard');
                 } else {
                     console.error('error occurred while login');
                 }
@@ -45,19 +45,19 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.route
-            .queryParams
-            .subscribe(params => {
-                 const errorMessage = params['errorMessage'];
-
-                 if (errorMessage) {
-                     this.notificationService.createSimpleNotification(errorMessage, 5000);
-                 }
-            });
-
-        this.authService.getUserDetails().subscribe(isSuccessfull => {
-            if (isSuccessfull) {
+        this.authService.getUserDetails().subscribe(isSuccessful => {
+            if (isSuccessful) {
                 this.router.navigateByUrl('/dashboard');
+            } else {
+                this.route
+                .queryParams
+                .subscribe(params => {
+                    const errorMessage = params['errorMessage'];
+
+                    if (errorMessage) {
+                        this.notificationService.createSimpleNotification(errorMessage, 5000);
+                    }
+                });
             }
         });
     }

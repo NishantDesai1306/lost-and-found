@@ -1,6 +1,5 @@
 import { Component, OnInit, NgZone, Inject, EventEmitter, ViewChild, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import {NgUploaderOptions, UploadedFile, NgUploaderService} from 'ngx-uploader';
 import { ModalDirective } from 'ng2-bootstrap';
 import * as objectFitImages from 'object-fit-images';
 
@@ -20,11 +19,7 @@ export class UserComponent implements OnInit, OnDestroy {
     previewData: any;
     error = '';
 
-    inputUploadEvent: EventEmitter<string>;
-    uploaderOptions: NgUploaderOptions;
-    uploadProgress: number;
-    sizeLimit: number = 5*1024*1024;
-    uploadPromise: Promise<string>;
+    uploadPromise: Promise<string> = Promise.resolve('');
 
     loading = false;
 
@@ -33,9 +28,23 @@ export class UserComponent implements OnInit, OnDestroy {
         @Inject(NgZone)private zone: NgZone,
         private router: Router,
         private notificationService: NotificationService
-    ) {
-        this.uploadPromise = Promise.resolve("");
-        this.inputUploadEvent = new EventEmitter<string>();
+    ) {}
+
+    ngOnInit() {
+        const watcher = this
+            .userService
+            .getUser()
+            .subscribe(user => {
+                this.user = Object.assign({}, user);
+            });
+
+        this.watchers.push(watcher);
+    }
+
+    ngOnDestroy() {
+        this.watchers.forEach((watcher) => {
+            watcher.unsubscribe();
+        });
     }
 
     saveChanges() {
@@ -63,60 +72,16 @@ export class UserComponent implements OnInit, OnDestroy {
         this.watchers.push(watcher);
     }
 
-    handleUpload(data: any) {
-        setTimeout(() => {
-            this.zone
-                .run(() => {
-                    this.uploadProgress = data.progress.percent;
-                    if (data && data.response && !this.loading) {
-                        const serverResponse = JSON.parse(data.response);
-                        this.uploadProgress = 0;
-                        if (serverResponse.status) {
-                            this.userService.changeProfilePicture(serverResponse.data).subscribe(() => {});
-                            this.notificationService.createSimpleNotification('Profile Picture changed successfully');
-                        }
-                        else {
-                            console.error(serverResponse.reason);
-                        }
-                    }
-                });
-        });
-    }
-
-    beforeUpload(uploadingFile: UploadedFile): void {
-        if (uploadingFile.size > this.sizeLimit) {
-            uploadingFile.setAbort();
-            this.error = 'Can\'t upload file with size more than 5MB';
-        }
-    }
-
     handlePreviewData(data: any) {
         this.previewData = data;
     }
 
-    ngOnInit() {
-        const watcher = this
-            .userService
-            .getUser()
-            .subscribe(user => {
-                this.user = Object.assign({}, user);
+    onUploadComplete([profilePicture]) {
+        if (profilePicture.status) {
+            this.userService.changeProfilePicture(profilePicture.data)
+            .subscribe(() => {
+                this.notificationService.createSimpleNotification('Profile Picture updated successfully');
             });
-
-        this.watchers.push(watcher);
-
-        this.uploaderOptions = new NgUploaderOptions({
-            url: '/api/upload',
-            filterExtensions: true,
-            allowedExtensions: ['jpeg', 'jpg', 'png'],
-            autoUpload: true,
-            maxUploads: 1,
-            previewUrl: true,
-        });
-    }
-
-    ngOnDestroy() {
-        this.watchers.forEach((watcher) => {
-            watcher.unsubscribe();
-        });
-    }
+        }
+	}
 }

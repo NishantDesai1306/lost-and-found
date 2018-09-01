@@ -1,26 +1,26 @@
 <div fxFlex="100%" style="margin-top: 25px;" fxLayout="column" [style.height.px]="screenHeight">
-    <md-sidenav-container class="chat-container" [style.height]="screenHeight">
-        <md-sidenav mode="side" #sidenav class="chat-sidenav" [style.height.px]="screenHeight">
-            <md-list>
+    <mat-sidenav-container class="chat-container" [style.height]="screenHeight">
+        <mat-sidenav mode="side" #sidenav class="chat-sidenav" [style.height.px]="screenHeight">
+            <mat-list>
                 <div *ngFor="let companionUser of connectedUsers" class="chat-users-list-item cursor-pointer p2" [ngClass]="{'selected-user': chatData.companionUser._id === companionUser._id}" (click)="selectCompanionUser(companionUser)">
                     <div class="chat-user-item">
-                        <md-list-item>
-                            <img md-list-avatar src="{{replaceSlashes(companionUser.profilePicture.path)}}" alt="{{companionUser.username}}">
-                            <h3 md-line> {{companionUser.username}} </h3>
-                            <p *ngIf="companionUser.status === 'online'" class="status-online" md-line>
+                        <mat-list-item>
+                            <img mat-list-avatar src="{{replaceSlashes(companionUser.profilePicture.path)}}" alt="{{companionUser.username}}">
+                            <h3 mat-line> {{companionUser.username}} </h3>
+                            <p *ngIf="companionUser.status === 'online'" class="status-online" mat-line>
                                 {{companionUser.status}}
                             </p>
-                            <p *ngIf="companionUser.status !== 'online'" md-line>
+                            <p *ngIf="companionUser.status !== 'online'" mat-line>
                                 {{companionUser.lastOnline | date: 'dd-MMM hh:mm a'}}
                             </p>
-                            <md-chip-list *ngIf="missedMessageMap[companionUser.chatRoom]">
-                                <md-chip class="unread-message-count">{{missedMessageMap[companionUser.chatRoom]}}</md-chip>
-                            </md-chip-list>
-                        </md-list-item>
+                            <mat-chip-list *ngIf="missedMessageMap[companionUser.chatRoom]">
+                                <mat-chip class="unread-message-count">{{missedMessageMap[companionUser.chatRoom]}}</mat-chip>
+                            </mat-chip-list>
+                        </mat-list-item>
                     </div>
                 </div>
-            </md-list>
-        </md-sidenav>
+            </mat-list>
+        </mat-sidenav>
 
         <div class="chat-container" [style.height.px]="screenHeight">
             <div fxFlex fxLayout="column">
@@ -36,7 +36,7 @@
                                     <span>{{messageObj.message}}</span>
                                     <div class="message-details">
                                         <span class="message-time">{{messageObj.createdAt | date: 'hh:mm a'}}</span>
-                                        <md-icon class="message-status" [ngClass]="{'green-color': isMessageRead(messageObj)}">{{getMessageStatusIcon(messageObj)}}</md-icon>
+                                        <mat-icon class="message-status" [ngClass]="{'green-color': isMessageRead(messageObj)}">{{getMessageStatusIcon(messageObj)}}</mat-icon>
                                     </div>
                                 </div>
                             </div>
@@ -45,26 +45,26 @@
                 </div>
 
                 <div fxFlex="10%">
-                    <md-card *ngIf="!!chatData.companionUser._id" class="grey-background-color create-message-card height-70">
+                    <mat-card *ngIf="!!chatData.companionUser._id" class="grey-background-color create-message-card height-70">
                         <div fxFlex="100%" fxLayout="row">
                             <div fxFlex="95%">
-                                <md-input-container fxFlex>
-                                    <input mdInput placeholder="New Message" [(ngModel)]="chatData.newMessage">
-                                </md-input-container>
+                                <mat-form-field fxFlex>
+                                    <input matInput placeholder="New Message" [(ngModel)]="chatData.newMessage">
+                                </mat-form-field>
                             </div>
                             <div fxFlex="5%" fxLayout="row" fxLayoutAlign="center center">
-                                <button mdTooltip="Send" [disabled]="!chatData.newMessage" (click)="sendMessage(chatData.newMessage)" md-icon-button color="primary">
-                                    <md-icon>send</md-icon>
+                                <button matTooltip="Send" [disabled]="!chatData.newMessage" (click)="sendMessage(chatData.newMessage)" mat-icon-button color="primary">
+                                    <mat-icon>send</mat-icon>
                                 </button>
                             </div>
                         </div>
-                    </md-card>
+                    </mat-card>
                 </div>
-                <button (click)="sidenav.toggle()" md-fab class="fab indigo-background-color" fxShow.lg="false">
-                    <md-icon class="white-text-color">format_list_bulleted</md-icon>
+                <button (click)="sidenav.toggle()" mat-fab class="fab indigo-background-color" fxShow.lg="false">
+                    <mat-icon class="white-text-color">format_list_bulleted</mat-icon>
                 </button>
             </div>
         </div>
 
-    </md-sidenav-container>
+    </mat-sidenav-container>
 </div>

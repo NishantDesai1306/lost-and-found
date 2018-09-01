@@ -1,30 +1,31 @@
 <div fxLayout="column" fxFlex>
-
-    <md-toolbar style="height: 64px;" color="primary" class="pb4">
+    <mat-toolbar class="flex-shrink-1" style="height: 64px;" color="primary">
         <a href="#" routerLink="/dashboard" style="color: white; text-decoration: none;">
             <span>Lost Box</span>
         </a>
         <span fxFlex></span>
 
 
-        <button mdTooltip="Chat" *ngIf="username" md-icon-button routerLink="/dashboard/chat">
-            <md-icon>chat</md-icon>
-            <md-basic-chip *ngIf="notificationCount">{{notificationCount}}</md-basic-chip>
+        <button matTooltip="Chat" *ngIf="username" mat-icon-button routerLink="/dashboard/chat">
+            <mat-icon>chat</mat-icon>
+            <mat-basic-chip *ngIf="notificationCount">{{notificationCount}}</mat-basic-chip>
         </button>
-        <button *ngIf="username" md-button [mdMenuTriggerFor]="menu">
-             <md-icon>account_circle</md-icon> &nbsp; {{username}}
+        <button *ngIf="username" mat-button [matMenuTriggerFor]="menu">
+             <mat-icon>account_circle</mat-icon> &nbsp; {{username}}
         </button>
-        <md-menu #menu="mdMenu">
-            <button md-menu-item routerLink="/dashboard/user">
-                <md-icon>person</md-icon>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="/dashboard/user">
+                <mat-icon>person</mat-icon>
                 <span>User Details</span>
             </button>
-            <button md-menu-item (click)="logout()">
-                <md-icon>exit_to_app</md-icon>
+            <button mat-menu-item (click)="logout()">
+                <mat-icon>exit_to_app</mat-icon>
                 <span>Logout</span>
             </button>
-        </md-menu>
-    </md-toolbar>
+        </mat-menu>
+    </mat-toolbar>
 
-    <router-outlet class="mb4"></router-outlet>
+    <div style="position:  relative; top: 64px;">
+        <router-outlet></router-outlet>
+    </div>
 </div>

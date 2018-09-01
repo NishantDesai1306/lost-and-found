@@ -73,31 +73,26 @@ export class UserService {
     };
 
     changeDetails(username, email) {
-        const self = this;
         const changeDetailsUrl = this.apiUrl + '/change-details';
 
-        return self.http.post(changeDetailsUrl, {username, email})
-            .map((res: any) => res.json())
-            .map((res) => {
+        return this.http.post(changeDetailsUrl, {username, email})
+            // .map((res: any) => res.json())
+            .map((res: any) => {
                 if (res.status) {
-                    self.setUser(res.data._id, res.data.username, res.data.email, res.data.profilePictureUrl);
+                    this.setUser(res.data._id, res.data.username, res.data.email, res.data.profilePictureUrl);
                 }
                 return res;
             })
-            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+            .catch((error: any) => Observable.throw(error || 'Server error'));
     }
 
     changeProfilePicture(uploadId) {
-        const self = this;
         const changeProfilePictureUrl = this.apiUrl + '/change-profile-picture';
 
-        return self.http.post(changeProfilePictureUrl, {profilePicture: uploadId})
-            .map((res: Response) => {
-                return res.json();
-            })
+        return this.http.post(changeProfilePictureUrl, {profilePicture: uploadId})
             .map((res: any) => {
                 if (res && res.status) {
-                    self.setUser(res.data._id, res.data.username, res.data.email, res.data.profilePictureUrl);
+                    this.setUser(res.data._id, res.data.username, res.data.email, res.data.profilePictureUrl);
                 }
                 return res;
             })
@@ -105,14 +100,9 @@ export class UserService {
     }
 
     changePassword(oldPassword, newPassword) {
-        const self = this;
         const changePasswordUrl: string = this.apiUrl + '/change-password';
 
-        return self.http.post(changePasswordUrl, {oldPassword, newPassword})
-            .map((res: Response) => res.json())
-            .map((res) => {
-                return res;
-            })
-            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+        return this.http.post(changePasswordUrl, {oldPassword, newPassword})
+            .catch((error: any) => Observable.throw(error || 'Server error'));
     }
 }

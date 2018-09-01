@@ -1,0 +1,10 @@
+<div class="mb-3" fxLayout="row wrap">
+    <div *ngFor="let preview of previews" fxFlex="25%" fxLayout="row" fxLayoutAlign="center end" >
+        <div class="d-flex basic-trigger-thumbnail-container">
+            <img class="basic-trigger-thumbnail" src="{{preview.base64 || preview.url}}" alt="preview">
+            <div class='thumbnail-delete-button' (click)="removeFile(preview.id)">
+                <mat-icon>clear</mat-icon>
+            </div>
+        </div>
+    </div>
+</div>

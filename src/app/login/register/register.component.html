@@ -1,40 +1,38 @@
-<div fxFlex="100%" class="mt4 pt4" fxLayout="column" fxLayoutAlign="center stretch">
-    <div class="content mt4" fxLayout="row" fxLayoutGap="16px">
-        <div fxFlex.lt-sm="100%" fxFlex="70%" fxFlexOffset.gt-xs="15%">
+<div fxFlex="100%" class="my-4 py-4" fxLayout="column" fxLayoutAlign="center stretch">
+    <div class="content mt-4" fxLayout="row" class="my-4 py-4">
+        <div fxFlex.lt-sm="100%" fxFlex="70%" fxFlexOffset.gt-xs="15%" class="my-4 py-4">
             <div fxLayout="row">
                 <div fxFlex.gt-sm="50%" fxFlexOffset.gt-sm="25%">
-                    <md-card class="indigo-background-color">
-                        <md-card-header>
+                    <mat-card class="indigo-background-color">
+                        <mat-card-header>
                             <div fxFlex fxLayoutAlign="center center">
                                 <h2 class="white-text-color">Register</h2>
                             </div>
-                        </md-card-header>
-                        <md-card-content>
+                        </mat-card-header>
+                        <mat-card-content>
                             <div fxLayout="column">
-                                <md-input-container fxFlex class="white-input mt1" hintLabel="{{emailError}}">
-                                    <input [(ngModel)]="user.email" mdInput placeholder="Email" type="email">
-                                </md-input-container>
+                                <mat-form-field fxFlex class="white-input mt-1" hintLabel="{{emailError}}">
+                                    <input [(ngModel)]="user.email" matInput placeholder="Email" type="email">
+                                </mat-form-field>
 
-                                <md-input-container fxFlex class="white-input mt1" hintLabel="{{usernameError}}">
-                                    <input [(ngModel)]="user.username" mdInput placeholder="Username">
-                                </md-input-container>
+                                <mat-form-field fxFlex class="white-input mt-1" hintLabel="{{usernameError}}">
+                                    <input [(ngModel)]="user.username" matInput placeholder="Username">
+                                </mat-form-field>
 
-                                <md-input-container fxFlex class="white-input mt1">
-                                    <input [(ngModel)]="user.password" mdInput placeholder="Password" type="password">
-                                </md-input-container>
+                                <mat-form-field fxFlex class="white-input mt-1">
+                                    <input [(ngModel)]="user.password" matInput placeholder="Password" type="password">
+                                </mat-form-field>
 
-                                <md-input-container fxFlex class="white-input mt1" hintLabel="{{passwordError}}">
-                                    <input [(ngModel)]="user.confirmPassword" mdInput placeholder="Confirm Password" type="password">
-                                </md-input-container>
+                                <mat-form-field fxFlex class="white-input mt-1" hintLabel="{{passwordError}}">
+                                    <input [(ngModel)]="user.confirmPassword" matInput placeholder="Confirm Password" type="password">
+                                </mat-form-field>
 
-                                <div>
-                                    <div class="mt3" fxFlex>
-                                        <button (click)="register()" routerLink="/register" md-raised-button fxFlex>Register</button>
-                                    </div>
+                                <div class="mt-3" fxFlex>
+                                    <button class="full-width" (click)="register()" routerLink="/register" mat-raised-button>Register</button>
                                 </div>
                             </div>
-                        </md-card-content>
-                    </md-card>
+                        </mat-card-content>
+                    </mat-card>
                 </div>
             </div>
         </div>

@@ -7,10 +7,7 @@ interface SocketMessage {
     data: any;
 }
 
-@Injectable({
-    providedIn: 'root'
-})
-export class ChatzzService {
+export class ChatzzServiceImplementation {
     private socket;
     socketMessageBehaviourSubject: BehaviorSubject<SocketMessage>;
 
@@ -32,8 +29,7 @@ export class ChatzzService {
     constructor(private serverUrl: string) {
         if (!serverUrl) {
             throw new Error('invalid server url provided');
-        }
-        else {
+        } else {
             console.log('chatzz service configured to work with server', serverUrl);
         }
 
@@ -133,11 +129,18 @@ export class ChatzzService {
     }
 }
 
-export const getChatzzService = (url: string): ChatzzService => {
-    let chatzzServiceInstance: ChatzzService = null;
+const getChatzzService = (url: string): ChatzzServiceImplementation => {
+    let chatzzServiceInstance: ChatzzServiceImplementation = null;
 
     if (!chatzzServiceInstance) {
-        chatzzServiceInstance = new ChatzzService(url);
+        chatzzServiceInstance = new ChatzzServiceImplementation(url);
     }
+
     return chatzzServiceInstance;
 };
+
+@Injectable({
+    providedIn: 'root',
+    useFactory: () => getChatzzService('http://localhost:4200/')
+})
+export class ChatzzService {}

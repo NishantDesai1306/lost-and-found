@@ -8,7 +8,8 @@ import { UserService } from '../../../shared/user.service';
 import { MatDialog } from '@angular/material';
 import { ConfirmService } from '../../../shared/confirm.service';
 import { ItemService } from '../../../shared/item.service';
-import { ChatzzService } from '../../../shared/chatzz.service.provider';
+// import { ChatzzService } from '../../../shared/chatzz.service.provider';
+import { ChatzzService } from '../../../shared/chatzz.service';
 
 @Component({
     templateUrl: './item-card.component.html',
@@ -63,16 +64,22 @@ export class ItemCardComponent implements OnInit, OnDestroy {
     }
 
     editItem() {
+        const itemObj = Object.assign({}, this.item);
+        itemObj.images = itemObj.images.map(({_id: id, path: file}) => ({
+            id,
+            file
+        }));
+
         const editItemDialogRef = this.dialog.open(EditItemComponent, {
             width: '600px',
-            data: this.item
+            data: { item: itemObj }
         });
 
-        this.dialog.afterAllClosed.subscribe(() => {
-            this.refreshItems.emit();
+        editItemDialogRef.afterClosed().subscribe((shouldRefresh) => {
+            if (shouldRefresh) {
+                this.refreshItems.emit();
+            }
         });
-
-        editItemDialogRef.componentInstance.item = this.item;
     }
 
     deleteItem() {

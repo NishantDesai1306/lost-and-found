@@ -38,8 +38,6 @@ import { LoginModule } from './login/login.module';
 
 import { AppRoutingModule } from './app.routing';
 import { HomeComponent } from './home/home.component';
-import { NgUploaderModule } from 'ngx-uploader';
-
 import 'hammerjs';
 import { EditItemComponent } from './dashboard/main/edit-item/edit-item.component';
 import { ChatComponent } from './dashboard/chat/chat.component';
@@ -59,7 +57,7 @@ import { NotificationCountService } from './dashboard/services/notification-coun
 
     CreateItemComponent,
     EditItemComponent,
-    ViewItemComponent
+    ViewItemComponent,
   ],
   entryComponents: [
     ViewItemComponent,
@@ -76,7 +74,6 @@ import { NotificationCountService } from './dashboard/services/notification-coun
     RouterModule,
     LoginModule,
     FormsModule,
-    NgUploaderModule,
 
     ProgressbarModule.forRoot(),
     ModalModule.forRoot(),

@@ -1,11 +1,12 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatIconModule, MatDialogModule, MatChipsModule} from '@angular/material';
+import { MatIconModule, MatDialogModule, MatChipsModule, MatMenu, MatMenuTrigger } from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import { UserService } from './shared/user.service';
 import { AuthService } from './shared/auth.service';
-import {ChatzzServiceProvider, ChatzzService} from './shared/chatzz.service.provider';
+// import {ChatzzServiceProvider, ChatzzService} from './shared/chatzz.service.provider';
 import { NotificationCountService } from './dashboard/services/notification-count.service';
+import { ChatzzService } from './shared/chatzz.service';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +28,7 @@ export class AppComponent implements OnInit {
       this.authService.logout()
       .subscribe((response) => {
           if (response.status) {
-              this.router.navigateByUrl('/login')
+              this.router.navigateByUrl('/login');
           } else {
               console.error('error occurred while logging out', response.reason);
           }
@@ -42,7 +43,7 @@ export class AppComponent implements OnInit {
         this.userService
             .getUser()
             .subscribe((newUser) => {
-                this.username = newUser.getUsername(); 
+                this.username = newUser.getUsername();
                 this.chatzzService.newMessage()
                 .subscribe((message) => {
                     if (message.type === this.chatzzService.messageTypes.CHAT_USER_ADDED) {
@@ -50,7 +51,7 @@ export class AppComponent implements OnInit {
                         connectedUsers.push(message.data);
                         newUser.setConnectedUsers(connectedUsers);
                     }
-                })
+                });
             });
 
         this.notificationCountService.getSubscription()

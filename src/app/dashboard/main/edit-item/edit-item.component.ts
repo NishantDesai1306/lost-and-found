@@ -1,15 +1,13 @@
-import { Response } from '@angular/http';
-import { ItemService } from './../../../shared/item.service';
-import { Component, OnInit, EventEmitter, NgZone, Inject } from '@angular/core';
-import { NgUploaderOptions, UploadedFile } from 'ngx-uploader';
-import { NotificationService } from '../../../shared/notification.service';
-import { ConfirmService } from '../../../shared/confirm.service';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import {Component, NgZone, Inject} from '@angular/core';
 
-@Component({
-    templateUrl: './edit-item.component.html'
-})
-export class EditItemComponent implements OnInit {
+import {ItemService} from './../../../shared/item.service';
+import {NotificationService} from '../../../shared/notification.service';
+import {ConfirmService} from '../../../shared/confirm.service';
+import { log } from 'util';
+
+@Component({templateUrl: './edit-item.component.html'})
+export class EditItemComponent {
 
     item;
 
@@ -17,93 +15,44 @@ export class EditItemComponent implements OnInit {
     descriptionError = '';
     uploadError = '';
 
-    inputUploadEvent: EventEmitter<string>;
-    uploaderOptions: NgUploaderOptions;
-    uploadProgress: number;
-    sizeLimit: number = 5 * 1024 * 1024;
-    updating = false;
-    previewData = [];
-    imageUploadIds = [];
+    uploadImages = false;
 
     constructor(
-        @Inject(NgZone)private zone: NgZone,
         private itemService: ItemService,
         private notificationService: NotificationService,
         private confirmService: ConfirmService,
-        private dialogRef: MatDialogRef<EditItemComponent>
+        private dialogRef: MatDialogRef < EditItemComponent >,
+        @Inject(MAT_DIALOG_DATA) data
     ) {
-        this.inputUploadEvent = new EventEmitter<string>();
-     }
-
-    ngOnInit() {
-        this.uploaderOptions = new NgUploaderOptions({
-            url: '/api/upload',
-            filterExtensions: true,
-            allowedExtensions: ['jpeg', 'jpg', 'png'],
-            multiple: true,
-            maxSize: this.sizeLimit,
-            autoUpload: false,
-            previewUrl: true,
-        });
-     }
-
-     handleUpload(data: any) {
-        const self = this;
-
-        setTimeout(() => {
-            this.zone
-                .run(() => {
-                    self.uploadProgress = data.progress.percent;
-
-                    if (data && data.response) {
-                        const responseObj = JSON.parse(data.response);
-                        if (this.imageUploadIds.indexOf(responseObj.data) === -1) {
-                            this.imageUploadIds.push(responseObj.data);
-                        }
-                    }
-
-                    if (this.imageUploadIds.length === this.item.images.length + this.previewData.length && !this.updating) {
-                        self.uploadProgress = 0;
-                        this.updating = true;
-
-                        this.itemService.updateItem(this.item._id, this.item.title, this.item.description, this.imageUploadIds)
-                        .subscribe((serverResponse) => {
-                            if (serverResponse.status) {
-                                this.dialogRef.close();
-                            }
-                            else {
-                                console.error(serverResponse.reason);
-                            }
-                        });
-                    }
-                });
-        });
+        this.item = data.item;
     }
 
     replaceSlashes(url: string) {
         return url.replace(/\\/g, '/');
     }
 
-    handlePreviewData(data: any) {
-        this.previewData.push(data);
+    cancel() {
+        this.dialogRef.close();
     }
 
-    deleteImage(index) {
+    deleteImage(imageId) {
         if (this.item.images && this.item.images.length === 1) {
-            return this.notificationService.createSimpleNotification('Item should have atleast single image');
+            return this.notificationService.createSimpleNotification('Item should have at least single image');
         }
 
-        const image = this.item.images[index];
-        this.confirmService.confirm('Confirm', 'Are you sure you want to remove this image ?')
-        .subscribe((result) => {
-            if (result) {
-                this.itemService.removeImage(this.item, image).subscribe((res) => {
-                    if (res.status) {
-                        this.item.splice(index, 1);
-                    }
-                });
-            }
-        });
+        this.confirmService
+            .confirm('Confirm', 'Are you sure you want to remove this image ?')
+            .subscribe((result) => {
+                if (result) {
+                    this.itemService
+                        .removeImage(this.item._id, imageId)
+                        .subscribe((res: any) => {
+                            if (res.status) {
+                                this.item.images = this.item.images.filter(({id}) => id !== imageId);
+                            }
+                        });
+                }
+            });
     }
 
     editItem() {
@@ -120,24 +69,24 @@ export class EditItemComponent implements OnInit {
             return;
         }
 
-        this.item.images.forEach((image) => {
-            this.imageUploadIds.push(image._id.toString());
-        });
+        this.uploadImages = true;
+    }
 
-        if (this.previewData && !this.previewData.length) {
-            this.itemService.updateItem(this.item._id, this.item.title, this.item.description, this.imageUploadIds)
-            .subscribe((serverResponse) => {
-                if (serverResponse.status) {
-                    console.log('completed');
-                }
-                else {
-                    console.error(serverResponse.reason);
-                }
-            });
-        }
-        else {
-            this.inputUploadEvent.emit('startUpload');
-        }
+    saveItem(responses) {
+        const newImageIds = responses.map(({data}) => data);
+        const existingImageIds = this.item.images.map(({id}) => id);
+        const imageIds = existingImageIds.concat(newImageIds);
 
+        if (imageIds && imageIds.length) {
+            this.itemService
+                .updateItem(this.item._id, this.item.title, this.item.description, imageIds)
+                .subscribe((serverResponse: any) => {
+                    if (serverResponse.status) {
+                        this.dialogRef.close(true);
+                    } else {
+                        console.error(serverResponse.reason);
+                    }
+                });
+        }
     }
 }

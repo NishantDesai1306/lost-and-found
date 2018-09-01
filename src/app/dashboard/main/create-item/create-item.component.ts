@@ -52,12 +52,16 @@ export class CreateItemComponent {
 			.filter(({status}) => status)
 			.map(({data}) => data);
 
+		if (!this.item.images || !this.item.images.length) {
+			this.notificationService.createSimpleNotification('Item should have at least one image');
+			return;
+		}
+
 		this.itemService.createItem(this.item.title, this.item.description, this.item.images)
 			.subscribe((data) => {
-				console.log('data', data);
 				this.notificationService.createSimpleNotification('Item created successfully');
 
-				this.dialogRef.close();
+				this.dialogRef.close(true);
 			});
 	}
 }

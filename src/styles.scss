@@ -51,6 +51,10 @@ body {
     background: mat-color($mat-grey, 300) !important;
 }
 
+.grey-color {
+    color: mat-color($mat-grey, 500) !important;
+}
+
 .white-progress-bar {
     .mat-progress-bar-element {
         background: lightgray !important;

@@ -2,7 +2,12 @@
     <div class="content" fxLayout="row">
         <div fxFlex.lt-sm="100%" fxFlex="70%" fxFlexOffset.gt-xs="15%">
             <div class="my3" fxLayout="row">
-                <div fxFlex="100%" fxLayout="row">
+                <div class="mt-3 grey-color" fxFlex="100%" fxLayout="row" fxLayoutAlign="center" *ngIf="!rightItems.length && !leftItems.length">
+                    <mat-icon class="px-3" style="font-size: 35px;">mood_bad</mat-icon>
+                    <h2 class="m-0 mt-1">No Entries found</h2>
+                </div>
+
+                <div fxFlex="100%" fxLayout="row" *ngIf="rightItems.length || leftItems.length">
                     <mat-spinner *ngIf="loadingItems" fxFlex></mat-spinner>
 
                     <div class="content" *ngIf="!loadingItems" fxLayout="column" fxFlex.lt-md="100%" fxFlex.gt-md="50%">

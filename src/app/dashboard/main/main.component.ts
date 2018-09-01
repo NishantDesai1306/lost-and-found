@@ -1,7 +1,4 @@
 import { NotificationCountService } from './../services/notification-count.service';
-// import { ChatzzService } from './../../shared/chatzz.service.provider';
-import { ViewItemComponent } from './view-items/view-item.component';
-import { EditItemComponent } from './edit-item/edit-item.component';
 import { ItemService } from './../../shared/item.service';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material';
@@ -119,12 +116,14 @@ export class MainComponent implements OnInit, OnDestroy {
     }
 
     createItem() {
-        this.dialog.open(CreateItemComponent, {
+        const createItemDialogRef = this.dialog.open(CreateItemComponent, {
             width: '600px',
         });
 
-        this.dialog.afterAllClosed.subscribe((data) => {
-            this.loadItems();
+        createItemDialogRef.afterClosed().subscribe((shouldRefresh) => {
+            if (shouldRefresh) {
+                this.loadItems();
+            }
         });
     }
 }

@@ -21,15 +21,19 @@
     cursor: pointer;
 }
 
-.create-message-card {
-    position: fixed !important;
-    width: 100% !important;
-    bottom: 0 !important;
-    padding: 10px !important;
-}
+.create-message-card-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
-.height-70 {
-    height: 70px !important;
+    .message-input {
+        width: 100%;
+
+        .mat-form-field-wrapper {
+            padding-bottom: 15px;
+        }
+    }
 }
 
 .margin-bottom-70 {
@@ -109,12 +113,6 @@
 
 .green-color {
     color: mat-color($mat-green, 400);
-}
-
-.unread-message-count {
-    background: mat-color($mat-green, 400) !important;
-    font-weight: bold !important;
-    color: white !important;
 }
 
 .chat-users-list-item {

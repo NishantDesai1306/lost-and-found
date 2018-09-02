@@ -186,9 +186,12 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.companionUserBehaviourSubject.next(user);
     }
 
-    sendMessage(message: string) {
+    sendMessage() {
+        const message = this.chatData.newMessage;
+
         if (message) {
             this.chatzzService.sendMessage(this.chatData.companionUser._id, message);
+            this.chatData.newMessage = '';
         }
     }
     loadMessages(userId) {

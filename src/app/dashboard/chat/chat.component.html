@@ -1,69 +1,93 @@
-<div fxFlex="100%" style="margin-top: 25px;" fxLayout="column" [style.height.px]="screenHeight">
+<div fxFlex="100%" fxLayout="column" [style.height.px]="screenHeight">
     <mat-sidenav-container class="chat-container" [style.height]="screenHeight">
         <mat-sidenav mode="side" #sidenav class="chat-sidenav" [style.height.px]="screenHeight">
             <mat-list>
                 <div *ngFor="let companionUser of connectedUsers" class="chat-users-list-item cursor-pointer p2" [ngClass]="{'selected-user': chatData.companionUser._id === companionUser._id}" (click)="selectCompanionUser(companionUser)">
                     <div class="chat-user-item">
-                        <mat-list-item>
-                            <img mat-list-avatar src="{{replaceSlashes(companionUser.profilePicture.path)}}" alt="{{companionUser.username}}">
-                            <h3 mat-line> {{companionUser.username}} </h3>
-                            <p *ngIf="companionUser.status === 'online'" class="status-online" mat-line>
-                                {{companionUser.status}}
-                            </p>
-                            <p *ngIf="companionUser.status !== 'online'" mat-line>
-                                {{companionUser.lastOnline | date: 'dd-MMM hh:mm a'}}
-                            </p>
-                            <mat-chip-list *ngIf="missedMessageMap[companionUser.chatRoom]">
-                                <mat-chip class="unread-message-count">{{missedMessageMap[companionUser.chatRoom]}}</mat-chip>
-                            </mat-chip-list>
+                        <mat-list-item fxFlex="100%" fxLayout="row">
+                            <div fxFlex="25%" class="mx-1">
+                                <ngx-avatar
+                                    src="{{replaceSlashes(companionUser.profilePicture.path)}}"
+                                    name="companionUser.username"
+                                ></ngx-avatar>
+                            </div>
+                            <div fxFlex="65%" class="mx-1" fxLayoutAlign="center" fxLayout="column">
+                                <h3 class="m-0" mat-line> {{companionUser.username}} </h3>
+                                <p *ngIf="companionUser.status === 'online'" class="m-0 status-online" mat-line>
+                                    {{companionUser.status}}
+                                </p>
+                                <p *ngIf="companionUser.status !== 'online'" mat-line class="m-0">
+                                    {{companionUser.lastOnline | date: 'dd-MMM hh:mm a'}}
+                                </p>
+                            </div>
+                            <div
+                                *ngIf="missedMessageMap[companionUser.chatRoom]"
+                                fxFlex="10%"
+                                class="mx-1 d-flex align-items-center"
+                            >
+                                <ngx-avatar
+                                    bgColor="#66bb6a"
+                                    fgColor="white"
+                                    size="30"
+                                    name="{{missedMessageMap[companionUser.chatRoom]}}"
+                                ></ngx-avatar>
+                            </div>
                         </mat-list-item>
                     </div>
                 </div>
             </mat-list>
         </mat-sidenav>
 
-        <div class="chat-container" [style.height.px]="screenHeight">
-            <div fxFlex fxLayout="column">
-                <div fxFlex="90%" style="overflow-x: auto;" fxLayout='column'>
-                    <div *ngIf="chatData.messages && chatData.messages.length" class="margin-bottom-70 display-block">
-                        <div *ngFor="let messageObj of chatData.messages" fxLayoutAlign="{{getMessageAlignment(messageObj)}}" fxFlex class="message-item">
-                            <div class="message-container">
-                                <div [ngClass]="{'my-pic': messageObj.from.user._id === userId}">
-                                    <img *ngIf="messageObj.showImage" src="{{replaceSlashes(messageObj.from.user.profilePicture.path)}}" class="user-image">
-                                </div>
+        <div class="chat-container overflow-hidden" [style.height.px]="screenHeight-1" fxFlex fxLayout="column">
+            <div style="overflow-x: auto;" fxLayout='column' [style.height.px]="screenHeight - 75">
+                <div *ngIf="chatData.messages && chatData.messages.length" class="margin-bottom-70 display-block">
+                    <div *ngFor="let messageObj of chatData.messages" fxLayoutAlign="{{getMessageAlignment(messageObj)}}" fxFlex class="message-item">
+                        <div class="message-container">
+                            <div [ngClass]="{'my-pic': messageObj.from.user._id === userId}">
+                                <img *ngIf="messageObj.showImage" src="{{replaceSlashes(messageObj.from.user.profilePicture.path)}}" class="user-image">
+                            </div>
 
-                                <div class="bubble" [ngClass]="{'left-chat-bubble': messageObj.to.user._id === userId, 'right-chat-bubble': messageObj.from.user._id === userId}">
-                                    <span>{{messageObj.message}}</span>
-                                    <div class="message-details">
-                                        <span class="message-time">{{messageObj.createdAt | date: 'hh:mm a'}}</span>
-                                        <mat-icon class="message-status" [ngClass]="{'green-color': isMessageRead(messageObj)}">{{getMessageStatusIcon(messageObj)}}</mat-icon>
-                                    </div>
+                            <div class="bubble" [ngClass]="{'left-chat-bubble': messageObj.to.user._id === userId, 'right-chat-bubble': messageObj.from.user._id === userId}">
+                                <span>{{messageObj.message}}</span>
+                                <div class="message-details">
+                                    <span class="message-time">{{messageObj.createdAt | date: 'hh:mm a'}}</span>
+                                    <mat-icon class="message-status" [ngClass]="{'green-color': isMessageRead(messageObj)}">{{getMessageStatusIcon(messageObj)}}</mat-icon>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div fxFlex="10%">
-                    <mat-card *ngIf="!!chatData.companionUser._id" class="grey-background-color create-message-card height-70">
-                        <div fxFlex="100%" fxLayout="row">
-                            <div fxFlex="95%">
-                                <mat-form-field fxFlex>
-                                    <input matInput placeholder="New Message" [(ngModel)]="chatData.newMessage">
-                                </mat-form-field>
-                            </div>
-                            <div fxFlex="5%" fxLayout="row" fxLayoutAlign="center center">
-                                <button matTooltip="Send" [disabled]="!chatData.newMessage" (click)="sendMessage(chatData.newMessage)" mat-icon-button color="primary">
-                                    <mat-icon>send</mat-icon>
-                                </button>
-                            </div>
-                        </div>
-                    </mat-card>
-                </div>
-                <button (click)="sidenav.toggle()" mat-fab class="fab indigo-background-color" fxShow.lg="false">
-                    <mat-icon class="white-text-color">format_list_bulleted</mat-icon>
-                </button>
             </div>
+
+            <div [style.height.px]="75" class="create-message-card-container">
+                <mat-card
+                    *ngIf="!!chatData.companionUser._id"
+                    class="grey-background-color px-3 py-0 d-flex align-items-center"
+                    style="height: 100%"
+                >
+                    <div fxFlex="100%" fxLayout="row">
+                        <div fxFlex="95%">
+                            <mat-form-field class="col-12 message-input pt-3">
+                                <input
+                                    matInput
+                                    #newMessage
+                                    placeholder="New Message"
+                                    [(ngModel)]="chatData.newMessage"
+                                    (keyup.enter)="sendMessage()"
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="5%" fxLayout="row" fxLayoutAlign="center center">
+                            <button matTooltip="Send" [disabled]="!chatData.newMessage" (click)="sendMessage()" mat-icon-button color="primary">
+                                <mat-icon>send</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <button (click)="sidenav.toggle()" mat-fab class="fab indigo-background-color" fxShow.lg="false">
+                <mat-icon class="white-text-color">format_list_bulleted</mat-icon>
+            </button>
         </div>
 
     </mat-sidenav-container>

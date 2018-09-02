@@ -33,6 +33,7 @@ import { SharedModule } from './shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { ProgressbarModule, ModalModule } from 'ng2-bootstrap';
 import { CarouselModule } from 'ng2-bootstrap/carousel';
+import { AvatarModule } from 'ngx-avatar';
 
 import { LoginModule } from './login/login.module';
 
@@ -91,6 +92,8 @@ import { NotificationCountService } from './dashboard/services/notification-coun
     MatFormFieldModule,
     MatSnackBarModule,
     MatSidenavModule,
+
+    AvatarModule,
 
     BrowserAnimationsModule,
     CarouselModule.forRoot()
